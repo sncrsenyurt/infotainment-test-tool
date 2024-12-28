@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .header h1 {
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            transition: transform 0.2s;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .icon img {
+            width: 50%;
+            margin-bottom: 10px;
+        }
+        .icon span {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to Infotainment Browser Dashboard</h1>
+    </div>
+    <div class="container">
+        <div class="icon-grid">
+            <a href="https://www.imdb.com/video/vi718127897/?playlistId=tt0167260&ref_=tt_ov_pr_ov_vi" class="icon" target="_blank">
+                <img src="images/main-page-icons/imdb video.png" alt="IMDB Video">
+                <span>IMDB Video</span>
+            </a>
+            <a href="language.html" class="icon">
+                <img src="images/main-page-icons/languages.png" alt="Languages">
+                <span>Languages</span>
+            </a>
+            <a href="test-pictures.html" class="icon">
+                <img src="images/main-page-icons/test pictures.png" alt="Test Pictures">
+                <span>Test Pictures</span>
+            </a>
+            <a href="browser-security.html" class="icon">
+                <img src="images/main-page-icons/Browser-security.png" alt="Browser-Security">
+                <span>Browser-Security</span>
+            </a>
+            <a href="chrome://newtab" class="icon">
+                <img src="images/main-page-icons/new browser.png" alt="New Browser">
+                <span>New Browser</span>
+            </a>
+            <a href="multimedia.html" class="icon">
+                <img src="images/other icons/Multimedia-VideoPlayback.png" alt="Multimedia-VideoPlayback">
+                <span>Multimedia-VideoPlayback</span>
+            </a>
+            <a href="location.html" class="icon">
+                <img src="images/main-page-icons/location.png" alt="Location">
+                <span>Location</span>
+            </a>
+            <a href="form-control.html" class="icon">
+                <img src="images/main-page-icons/form control.png" alt="Form Control">
+                <span>Form Control</span>
+            </a>
+            <a href="unsupported-features.html" class="icon">
+                <img src="images/main-page-icons/unsupported features.png" alt="Unsupported Features">
+                <span>Unsupported Features</span>
+            </a>
+            <a href="https://www.whatismybrowser.com/detect/what-is-my-user-agent/" class="icon" target="_blank">
+                <img src="images/main-page-icons/ui.png" alt="User Agent Check (UI)">
+                <span>User Agent Check (UI)</span>
+            </a>
+            <a href="https://www.tesla.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/tesla.png" alt="Tesla" style="width: 50%;">
+                <span>Tesla</span>
+            </a>
+            <a href="https://www.yelp.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/yelp.png" alt="Yelp" style="width: 50%;">
+                <span>Yelp</span>
+            </a>
+            <a href="https://www.spotify.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/spotify.png" alt="Spotify" style="width: 50%;">
+                <span>Spotify</span>
+            </a>
+            <a href="https://www.netflix.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/netflix.png" alt="Netflix" style="width: 50%;">
+                <span>Netflix</span>
+            </a>
+            <a href="https://www.youtube.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/youtube.png" alt="YouTube" style="width: 50%;">
+                <span>YouTube</span>
+            </a>
+            <a href="https://www.disneyplus.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/disney.png" alt="Disney+" style="width: 50%;">
+                <span>Disney+</span>
+            </a>
+            <a href="browser-protocol-001.html" class="icon" target="_blank">
+                <img src="images/main-page-icons/ssl.png" alt="Browser-protocol-001 (SSL)" style="width: 50%;">
+                <span>Browser-protocol-001 (SSL)</span>
+            </a>
+            <a href="browser-navigation-003.html" class="icon" target="_blank">
+                <img src="images/main-page-icons/browser-navigation-003.png" alt="Browser-Navigation-003" style="width: 50%;">
+                <span>Browser-Navigation-003</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
