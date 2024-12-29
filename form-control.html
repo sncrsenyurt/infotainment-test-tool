@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Form Control</h1>
         <h3>Browser-FormControl-001</h3>
-        <form action="/action_page.php">
+        <form onsubmit="event.preventDefault(); alert('Form submitted: ' + document.getElementById('fname').value + ' ' + document.getElementById('lname').value);">
           <label for="fname">First name:</label><br>
           <input type="text" id="fname" name="fname" value="irfan"><br>
           <label for="lname">Last name:</label><br>
