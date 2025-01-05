@@ -5,12 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Control</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #notification {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 16px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #notification.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @keyframes fadein {
+            from { top: 0; opacity: 0; }
+            to { top: 10px; opacity: 1; }
+        }
+        @keyframes fadeout {
+            from { top: 10px; opacity: 1; }
+            to { top: 0; opacity: 0; }
+        }
+        input[type="datetime-local"], select {
+            width: 300px;
+            height: 50px;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function showPopup(event) {
+            event.preventDefault();
+            const fname = document.getElementById('fname').value;
+            const lname = document.getElementById('lname').value;
+            const notification = document.getElementById('notification');
+            notification.innerText = `First Name: ${fname}, Last Name: ${lname}`;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Form Control</h1>
+        
         <h3>Browser-FormControl-001</h3>
-        <form action="/action_page.php">
+        <form onsubmit="showPopup(event)">
           <label for="fname">First name:</label><br>
           <input type="text" id="fname" name="fname" value="irfan"><br>
           <label for="lname">Last name:</label><br>
@@ -22,30 +69,30 @@
         <p>Choose your favorite Test Engineer:</p>
         <form>
             <input type="radio" id="html" name="fav_language" value="HTML">
-            <label for="html">Brian </label><br>
+            <label for="html">Brian</label><br>
             <input type="radio" id="css" name="fav_language" value="CSS">
-            <label for="css"> Irfan </label><br>
+            <label for="css">Irfan</label><br>
             <input type="radio" id="javascript" name="fav_language" value="JavaScript">
             <label for="javascript">Terry</label>
         </form>
 
         <h3>Browser-FormControl-003</h3>
-        <form action="">
+        <form>
           <input type="checkbox" name="vehicle" value="Bike">I don't have fleet access<br>
           <input type="checkbox" name="vehicle" value="Car">I don't have fleet access
         </form>
 
         <h3>Browser-FormControl-005</h3>
-        <form action="/action_page.php">
+        <form>
             <label for="birthdaytime">Select tomorrow's date:</label>
-            <input type="datetime-local" id="birthdaytime" name="birthdaytime" style="width: 300px; height: 50px;">
+            <input type="datetime-local" id="birthdaytime" name="birthdaytime">
             <input type="submit" value="Submit">
         </form>
 
         <h3>Browser-FormControl-006</h3>
-        <form action="/action_page.php">
+        <form>
             <label for="cars">What car are you conducting the FTP on:</label>
-            <select id="cars" name="cars" style="width: 300px; height: 50px;">
+            <select id="cars" name="cars">
               <option value="P2">P2</option>
               <option value="GCL">GCL</option>
               <option value="Nv35">Poppyseed</option>
@@ -55,7 +102,9 @@
             </select>
             <input type="submit" value="Submit">
         </form>
+        
         <a href="index.html" class="back-button">Back to Home</a>
+        <div id="notification"></div>
     </div>
 </body>
 </html>
