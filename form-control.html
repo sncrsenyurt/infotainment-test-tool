@@ -37,19 +37,54 @@
             height: 50px;
             font-size: 14px;
         }
+        body { font-family: Arial, sans-serif; }
+        button { margin-top: 20px; }
+        #alertButton {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 9px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 13px;
+            color: #000;
+            margin-left: 0;
+            display: inline-block;
+            width: auto;
+        }
+        #alertButton:hover {
+            background-color: #e0e0e0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100vh;
+            align-items: flex-start;
+            position: relative;
+        }
+        .back-button {
+            position: fixed;
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            margin: 0;
+        }
+
     </style>
     <script>
         function showPopup(event) {
             event.preventDefault();
             const fname = document.getElementById('fname').value;
             const lname = document.getElementById('lname').value;
-            const notification = document.getElementById('notification');
-            notification.innerText = `First Name: ${fname}, Last Name: ${lname}`;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            alert(`First name: ${fname}\nLast name: ${lname}`);
         }
+
+        let alertCount = 0;
+        document.getElementById('alertButton').addEventListener('click', function() {
+            alertCount++;
+            alert(`I am an alert box! ${alertCount}`);
+        });
     </script>
 </head>
 <body>
@@ -79,7 +114,10 @@
         <h3>Browser-FormControl-003</h3>
         <form>
           <input type="checkbox" name="vehicle" value="Bike">I don't have fleet access<br>
-          <input type="checkbox" name="vehicle" value="Car">I don't have fleet access
+          <input type="checkbox" name="vehicle" value="Car">I don't have fleet access<br>
+          <input type="checkbox" name="vehicle" value="Truck">I don't have fleet access<br>
+          <input type="checkbox" name="vehicle" value="Bus">I don't have fleet access<br>
+          <input type="checkbox" name="vehicle" value="Van">I don't have fleet access
         </form>
 
         <h3>Browser-FormControl-005</h3>
@@ -102,7 +140,28 @@
             </select>
             <input type="submit" value="Submit">
         </form>
-        
+
+        <h3>Browser-JavaScript-002</h3>
+        <div style="text-align: left;">
+            <button id="alertButton" style="margin-top: 10px;">Show Alert</button>
+        </div>
+
+        <h3>Browser-JavaScript-003</h3>
+        <div style="text-align: left;">
+            <button id="confirmButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">Show Confirm Box</button>
+        </div>
+
+        <script>
+            document.getElementById('confirmButton').addEventListener('click', function() {
+                let result = confirm("Please press a button. I would really appreciate it if you pressed a button, please? Don't be shy. It's only a button. Button button button.");
+                if (result) {
+                    alert("You pressed Yes!");
+                } else {
+                    alert("You pressed Cancel.");
+                }
+            });
+        </script>
+
         <a href="index.html" class="back-button">Back to Home</a>
         <div id="notification"></div>
     </div>

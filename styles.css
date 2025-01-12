@@ -37,6 +37,26 @@ button {
     cursor: pointer;
 }
 
+/* Home Page button styles */
+.back-button {
+    display: inline-block;
+    margin: 30px auto;
+    text-align: center;
+    font-size: 18px;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.back-button:hover {
+    background-color: #f0f0f0;
+}
+
 /* Main page styles */
 .container {
     max-width: 1200px;
