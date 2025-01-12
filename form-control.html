@@ -80,11 +80,22 @@
             alert(`First name: ${fname}\nLast name: ${lname}`);
         }
 
-        let alertCount = 0;
-        document.getElementById('alertButton').addEventListener('click', function() {
-            alertCount++;
-            alert(`I am an alert box! ${alertCount}`);
-        });
+        window.onload = function() {
+            let alertCount = 0;
+            document.getElementById('alertButton').addEventListener('click', function() {
+                alertCount++;
+                alert(`I am an alert box! ${alertCount}`);
+            });
+
+            document.getElementById('confirmButton').addEventListener('click', function() {
+                let result = confirm("Please press a button. I would really appreciate it if you pressed a button, please? Don't be shy. It's only a button. Button button button.");
+                if (result) {
+                    alert("You pressed Yes!");
+                } else {
+                    alert("You pressed Cancel.");
+                }
+            });
+        };
     </script>
 </head>
 <body>
@@ -150,17 +161,6 @@
         <div style="text-align: left;">
             <button id="confirmButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">Show Confirm Box</button>
         </div>
-
-        <script>
-            document.getElementById('confirmButton').addEventListener('click', function() {
-                let result = confirm("Please press a button. I would really appreciate it if you pressed a button, please? Don't be shy. It's only a button. Button button button.");
-                if (result) {
-                    alert("You pressed Yes!");
-                } else {
-                    alert("You pressed Cancel.");
-                }
-            });
-        </script>
 
         <a href="index.html" class="back-button">Back to Home</a>
         <div id="notification"></div>
