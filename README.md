@@ -1,6 +1,6 @@
 # Test Execution and Automation Platform
 
-**Uitest.xyz** is a web platform designed to make manual testing processes faster, error-free, and more efficient. Additionally, the platform supports and streamlines automation testing workflows. This platform is built using **HTML** and **CSS**, with a focus on delivering a user-friendly interface.
+**Uitest.xyz** is a web platform designed to make manual testing processes faster, error-free, and more efficient. Additionally, the platform supports and streamlines automation testing workflows. This platform is built using HTML and CSS, with a focus on delivering a user-friendly interface.
 
 ## Features
 
@@ -38,7 +38,7 @@
 
 ## Future Enhancements
 
-- Adding **analytics dashboards** to monitor test efficiency.
+- Adding analytics dashboards to monitor test efficiency.
 - Integration with more automation frameworks.
 - Real-time collaboration features for distributed testing teams.
 
