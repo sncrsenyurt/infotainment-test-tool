@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="description" content="Browser Test Tool Page">
+    <meta name="author" content="Irfan Senyurt">
+    <title>S3XY CT</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .header h1 {
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+            transition: transform 0.2s;
+        }
+        .icon:hover {
+            transform: scale(1.1);
+        }
+        .icon img {
+            width: 50%;
+            margin-bottom: 10px;
+        }
+        .icon span {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to Browser Test Tool Page</h1>
+    </div>
+    <div class="container">
+        <div class="icon-grid">
+            <a href="https://www.imdb.com/video/vi718127897/?playlistId=tt0167260&ref_=tt_ov_pr_ov_vi" class="icon" target="_blank">
+                <img src="images/main-page-icons/imdb video.png" alt="IMDB Video">
+                <span>IMDB Video</span>
+            </a>
+            <a href="language.html" class="icon">
+                <img src="images/main-page-icons/languages.png" alt="Languages">
+                <span style="display: block; font-weight: bold;">Language-Specific Web Pages</span>
+                <span style="display: block; font-size: 0.9em;">[Browser-Navigation-002 & all]</span>
+            </a>            
+            <a href="test-pictures.html" class="icon">
+                <img src="images/main-page-icons/test pictures.png" alt="Test Pictures">
+                <span style="display: block; font-weight: bold;">Test Pictures</span>
+                <span style="display: block; font-size: 0.9em;">[Browser-Multimedia-1 to 6]</span>
+            </a>
+            <a href="browser-security.html" class="icon">
+                <img src="images/main-page-icons/Browser-security.png" alt="Browser-Security">
+                <span>Browser-Security</span>
+            </a>
+            <a href="https://myaccount.nytimes.com/auth/enter-email?response_type=cookie&client_id=lgcl&redirect_uri=https%3A%2F%2Fwww.nytimes.com" class="icon">
+                <img src="images/main-page-icons/browser.png" alt="New Browser" style="width: 50%;">
+                <span style="display: block; font-weight: bold;">Browser-Tabs-002</span>
+                <span style="display: block; font-size: 0.9em;">Click for new tab</span>
+            </a>                       
+            <a href="multimedia.html" class="icon">
+                <img src="images/other icons/Multimedia-VideoPlayback.png" alt="Multimedia-VideoPlayback" style="width: 40%;">
+                <span style="display: block; font-weight: bold;">Multimedia-VideoPlayback</span>
+                <span style="display: block; font-size: 0.9em;">[MediaCodec]</span>
+            </a>            
+            <a href="location.html" class="icon">
+                <img src="images/main-page-icons/location.png" alt="Location">
+                <span style="display: block; font-weight: bold;">Location & GPS</span>
+                <span style="display: block; font-size: 0.9em;">[Browser-Geolocation-00X]</span>
+            </a>            
+            <a href="form-control.html" class="icon">
+                <img src="images/main-page-icons/form control.png" alt="Form Control">
+                <span>Form Control</span>
+            </a>
+            <a href="unsupported-features.html" class="icon">
+                <img src="images/main-page-icons/unsupported features.png" alt="Unsupported Features">
+                <span>Unsupported Features</span>
+            </a>
+
+            <a href="shaka-player.html" class="icon">
+                <img src="images/main-page-icons/shaka.png" alt="Shaka Player">
+                <span>Shaka Player</span>
+            </a>
+
+            <a href="https://www.vsynctester.com/" class="icon">
+                <img src="images/main-page-icons/fps2.png" alt="Browser-System-014">
+                <span>Browser-System-014</span>
+            </a>
+            <a href="https://chromewebstore.google.com/detail/chrome-remote-desktop/inomeogfingihgjfjlpeplalcfajhgai" class="icon">
+                <img src="images/main-page-icons/remote.jpeg" alt="Browser-Extensions-001">
+                <span>Browser-Extensions-001</span>
+            </a>
+            <a href="https://www.whatismybrowser.com/detect/what-is-my-user-agent/" class="icon" target="_blank">
+                <img src="images/main-page-icons/ui.png" alt="User Agent Check (UI)">
+                <span>User Agent Check (UI-001)</span>
+            </a>
+            <a href="https://webglsamples.org/aquarium/aquarium.html" class="icon" target="_blank">
+                <img src="images/main-page-icons/fps.png" alt="Browser-Multimedia-007" style="width: 50%;">
+                <span>Browser-Multimedia-007</span>
+            </a>
+            <a href="browser-protocol-001.html" class="icon" >
+                <img src="images/main-page-icons/protocol.png" alt="Browser-protocol-001 (SSL)" style="width: 50%;">
+                <span>Browser-protocol-All</span>
+            </a>
+            
+            <a href="browser-navigation-003.html" class="icon" target="_blank">
+                <img src="images/main-page-icons/text.png" alt="Browser-Navigation-003" style="width: 50%;">
+                <span>Browser-Navigation-003</span>
+            </a>
+            <a href="https://hardwaretester.com/gamepad" class="icon" target="_blank">
+                <img src="images/main-page-icons/controller.png" alt="Browser-GameController-001" style="width: 50%;">
+                <span>Browser-GameController-001</span>
+            </a>
+
+            <a href="http://iamtheproudownerofthelongestlongestlongestdomainnameinthisworld.com" class="icon" target="_blank">
+                <img src="images/main-page-icons/domain.png" alt="Browser-addressBar-004" style="width: 50%;">
+                <span style="display: block; font-weight: bold;">Browser-addressBar-004</span>
+                <span style="display: block; font-size: 0.9em;">Longest Domain Page</span>
+            </a>
+            
+            <a href="https://www.nytimes.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/nyt.png" alt="NYTimes" style="width: 50%;">
+                <span>NYtimes</span>
+            </a>
+            <a href="https://www.yelp.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/yelp.png" alt="Yelp" style="width: 50%;">
+                <span>Yelp</span>
+            </a>
+            <a href="https://www.google.com/" class="icon" target="_blank">
+                <img src="images/main-page-icons/chrome.png" alt="Google" style="width: 50%;">
+                <span>Google</span>
+            </a>
+        </div>
+    </div>
+    <footer style="font-size: 0.8em; font-family: Arial, sans-serif; text-align: center; margin-top: 20px;">
+        <p>&copy; 2025 <a href="https://irfansenyurt.com" target="_blank">Irfan Senyurt</a>. Developed with passion. All rights reserved.</p>
+    </footer>
+</body>
+</html>

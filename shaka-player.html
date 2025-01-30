@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Pictures</title>
+    <title>Shaka Player Demo</title>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <style>
         body {
@@ -11,6 +11,17 @@
             margin: 0;
             padding: 20px;
             background: #f5f7fa;
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Righteous', cursive;
         }
 
         .icon-grid {
@@ -75,20 +86,10 @@
             color: #000;
         }
 
-        .container {
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-family: 'Righteous', cursive;
-        }
-
         .back-button {
             display: inline-block;
             padding: 10px 25px;
-            margin: 20px 0;
+            margin-top: 30px;
             background: white;
             color: #000;
             text-decoration: none;
@@ -100,48 +101,27 @@
             transition: background-color 0.3s ease;
             border: none;
             cursor: pointer;
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
         }
 
         .back-button:hover {
             background: #f8f9fa;
         }
     </style>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Test Pictures[Browser-Multimedia-1 to 6]</h1>
+        <h1 style="text-align: center;">Shaka Player Demo Links</h1>
         <div class="icon-grid">
-            <a href="images/car pictures/jpg.jpg" class="icon" target="_blank">
-                <img src="images/other icons/jpg.png" alt="JPEG">
-                <span>Browser-Multimedia-001</span>
-                <span>JPEG</span>
+            <a href="https://shaka-player-demo.appspot.com" class="icon" target="_blank">
+                <img src="images/main-page-icons/shaka.png" alt="Shaka Player Demo">
+                <span>Shaka Player Demo Web Page</span>
             </a>
-            <a href="images/car pictures/gif.gif" class="icon" target="_blank">
-                <img src="images/other icons/picture.png" alt="GIF">
-                <span>Browser-Multimedia-002</span>
-                <span>GIF</span>
-            </a>
-            <a href="images/car pictures/png.png" class="icon" target="_blank">
-                <img src="images/other icons/png.png" alt="PNG">
-                <span>Browser-Multimedia-003</span>
-                <span>PNG</span>
-            </a>
-            <a href="images/car pictures/tif.tif" class="icon" target="_blank">
-                <img src="images/other icons/image.png" alt="TIF">
-                <span>Browser-Multimedia-004</span>
-                <span>TIFF</span>
-            </a>
-            <a href="https://people.math.sc.edu/Burkardt/data/tif/tif.html" class="icon" target="_blank">
-                <img src="images/other icons/Other Samples.png" alt="Other Samples" style="width: 50%;">
-                <span>Other Samples</span>
+            <a href="https://shaka-player-demo.appspot.com/demo/#audiolang=en-US;textlang=en-US;uilang=en-US;assetBase64=eyJuYW1lIjoiU2ludGVsIDRrIChtdWx0aWNvZGVjLCBXaWRldmluZSkiLCJzaG9ydE5hbWUiOiIiLCJpY29uVXJpIjoiaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3NoYWthLWFzc2V0LWljb25zL3NpbnRlbC5wbmciLCJtYW5pZmVzdFVyaSI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9zaGFrYS1kZW1vLWFzc2V0cy9zaW50ZWwtd2lkZXZpbmUvZGFzaC5tcGQiLCJzb3VyY2UiOiJTaGFrYSIsImZvY3VzIjpmYWxzZSwiZGlzYWJsZWQiOmZhbHNlLCJleHRyYVRleHQiOltdLCJleHRyYVVodW1ibmFpbCI6W10sImV4dHJhQ2hhcHRlciI6W10sImNlcnRpZmljYXRlVXJpIjpudWxsLCJkZXNjcmlwdGlvbiI6bnVsbCwiaXNGZWF0dXJlZCI6ZmFsc2UsImRybSI6WyJXaWRldmluZSBEUk0iXSwiZmVhdHVyZXMiOlsiREFTSCIsIkRvd25sb2FkYWJsZSIsIk1QNCIsIlN1YnRpdGxlcyIsIlVsdHJhLWhpZ2ggZGVmaW5pdGlvbiIsIlZPRCIsIldlYk0iXSwibGljZW5zZVNlcnZlcnMiOnsiX190eXBlX18iOiJtYXAiLCJjb20ud2lkZXZpbmUuYWxwaGEiOiJodHRwczovL2N3aXAtc2hha2EtcHJveHkuYXBwc3BvdC5jb20vbm9fYXV0aCJ9LCJvZmZsaW5lTGljZW5zZVNlcnZlcnMiOnsiX190eXBlX18iOiJtYXAifSwibGljZW5zZVJlcXVlc3RIZWFkZXJzIjp7Il9fdHlwZV9fIjoibWFwIn0sInJlcXVlc3RGaWx0ZXIiOm51bGwsInJlc3BvbnNlRmlsdGVyIjpudWxsLCJjbGVhcktleXMiOnsiX190eXBlX18iOiJtYXAifSwiZXh0cmFDb25maWciOnsiZHJtIjp7ImFkdmFuY2VkIjp7ImNvbS53aWRldmluZS5hbHBoYSI6eyJzZXJ2ZXJDZXJ0aWZpY2F0ZVVyaSI6Imh0dHBzOi8vY3dpcC1zaGFrYS1wcm94eS5hcHBzcG90LmNvbS9zZXJ2aWNlLWNlcnQifX0sInNlcnZlcnMiOnsiY29tLndpZGV2aW5lLmFscGhhIjoiaHR0cHM6Ly9jd2lwLXNoYWthLXByb3h5LmFwcHNwb3QuY29tL25vX2F1dGgifX19LCJleHRyYVVpQ29uZmlnIjpudWxsLCJhZFRhZ1VyaSI6bnVsbCwiaW1hVmlkZW9JZCI6bnVsbCwiaW1hQXNzZXRLZXkiOm51bGwsImltYUNvbnRlbnRTcmNJZCI6bnVsbCwiaW1hTWFuaWZlc3RUeXBlIjpudWxsLCJtZWRpYVRhaWxvclVybCI6bnVsbCwibWVkaWFUYWlsb3JBZHNQYXJhbXMiOm51bGwsInVzZUlNQSI6dHJ1ZSwibWltZVR5cGUiOm51bGx9;panel=HOME;build=uncompiled" class="icon" target="_blank">
+                <img src="images/main-page-icons/shaka.png" alt="Shaka Player Advanced Demo">
+                <span>Shaka Player Demo Video</span>
             </a>
         </div>
-        
-        <a href="index.html" class="back-button">Back to Home</a>
+        <a href="index.html" class="back-button">Back to Home Page</a>
     </div>
 </body>
 </html>

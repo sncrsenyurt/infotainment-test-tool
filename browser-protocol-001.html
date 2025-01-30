@@ -6,29 +6,106 @@
     <title>Browser Protocol SSL</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Righteous', cursive;
+        }
+
+        .icon-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: nowrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 200px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+
+        .icon:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .icon img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+            object-fit: contain;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .icon:hover img {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+        }
+
+        .icon span {
+            color: #000;
+            text-align: center;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+            max-width: 150px;
+            margin: 0 auto;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
         .back-button {
             display: inline-block;
-            margin: 30px auto;
-            text-align: center;
-            font-size: 18px;
-            text-decoration: none;
+            padding: 10px 25px;
+            margin-top: 30px;
+            background: white;
             color: #000;
-            border: 1px solid #000;
-            padding: 10px 20px;
-            border-radius: 5px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: background-color 0.3s ease;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+            border: none;
+            cursor: pointer;
         }
+
         .back-button:hover {
-            background-color: #f0f0f0;
+            background: #f8f9fa;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Browser-Protocol-001-Step_1</h1>
+        <h1>Browser Protocol SSL</h1>
         <div class="icon-grid">
             <a href="https://www.ssllabs.com/ssltest/viewMyClient.html" class="icon" target="_blank">
                 <img src="images/main-page-icons/ssl.png" alt="SSL Labs" style="width: 50%;">
@@ -38,22 +115,18 @@
                 <img src="images/main-page-icons/ssl.png" alt="How's My SSL" style="width: 50%;">
                 <span>Browser-Protocol-001-Step_2</span>
             </a>
-        </a>
-        <a href="http://www.http2demo.io/" class="icon" target="_blank">
-            <img src="images/other icons/search.png" alt="How's My SSL" style="width: 50%;">
-            <span>Browser-Protocol-002</span>
-        </a>
-
-        </a>
-        <a href="https://https.tunetheweb.com/performance-test/" class="icon" target="_blank">
-            <img src="images/other icons/https.png" alt="How's My SSL" style="width: 50%;">
-            <span>Browser-Protocol-003</span>
-        </a>
-
-
-
+            <a href="http://www.http2demo.io/" class="icon" target="_blank">
+                <img src="images/other icons/search.png" alt="How's My SSL" style="width: 50%;">
+                <span>Browser-Protocol-002</span>
+            </a>
+            <a href="https://https.tunetheweb.com/performance-test/" class="icon" target="_blank">
+                <img src="images/other icons/https.png" alt="How's My SSL" style="width: 50%;">
+                <span>Browser-Protocol-003</span>
+            </a>
         </div>
     </div>
-    <a href="index.html" class="back-button">Back to Home</a>
+    <div style="position: absolute; left: 47%; transform: translateX(-50%); margin-top: 20px;">
+        <a href="index.html" class="back-button">Back to Home</a>
+    </div>
 </body>
 </html>

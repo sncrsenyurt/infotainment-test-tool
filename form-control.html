@@ -4,73 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Control</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <style>
-        #notification {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 16px;
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        #notification.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-        @keyframes fadein {
-            from { top: 0; opacity: 0; }
-            to { top: 10px; opacity: 1; }
-        }
-        @keyframes fadeout {
-            from { top: 10px; opacity: 1; }
-            to { top: 0; opacity: 0; }
-        }
-        input[type="datetime-local"], select {
-            width: 300px;
-            height: 50px;
-            font-size: 14px;
-        }
-        body { font-family: Arial, sans-serif; }
-        button { margin-top: 20px; }
-        #alertButton {
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            padding: 9px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 13px;
-            color: #000;
-            margin-left: 0;
-            display: inline-block;
-            width: auto;
-        }
-        #alertButton:hover {
-            background-color: #e0e0e0;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            min-height: 100vh;
-            align-items: flex-start;
-            position: relative;
-        }
-        .back-button {
-            position: fixed;
-            bottom: 20px; 
-            left: 50%; 
-            transform: translateX(-50%); 
+        body {
+            font-family: 'Righteous', cursive;
             margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            min-height: 100vh;
         }
 
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding-bottom: 100px;
+        }
+
+        h1, h3 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            font-family: 'Righteous', cursive;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            padding-top: 20px;
+            border-top: 2px solid #f5f7fa;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .radio-group label:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        input[type="text"], 
+        input[type="email"], 
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, 
+        input[type="email"]:focus, 
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #2c3e50;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: white;
+            color: #2c3e50;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            display: block;
+        }
+
+        button:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            display: block;
+            padding: 10px 25px;
+            background: white;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 30px auto;
+            width: fit-content;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background: #f8f9fa;
+        }
+
+        #notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
     </style>
     <script>
         function showPopup(event) {
@@ -100,7 +183,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Form Control</h1>
+        <h1 style="color: #2c3e50; text-align: center; margin-bottom: 30px;">Form Control</h1>
         
         <h3>Browser-FormControl-001</h3>
         <form onsubmit="showPopup(event)">
@@ -123,13 +206,15 @@
         </form>
 
         <h3>Browser-FormControl-003</h3>
-        <form>
-          <input type="checkbox" name="vehicle" value="Bike">I don't have fleet access<br>
-          <input type="checkbox" name="vehicle" value="Car">I don't have fleet access<br>
-          <input type="checkbox" name="vehicle" value="Truck">I don't have fleet access<br>
-          <input type="checkbox" name="vehicle" value="Bus">I don't have fleet access<br>
-          <input type="checkbox" name="vehicle" value="Van">I don't have fleet access
-        </form>
+        <div class="radio-group">
+            <label><input type="checkbox" name="fleet" value="gregg"> Gregg loves people!</label>
+            <label><input type="checkbox" name="fleet" value="thai"> Master Thai's hot sauce can melt steel beams</label>
+            <label><input type="checkbox" name="fleet" value="kevinh"> Kevin H. knows what happened</label>
+            <label><input type="checkbox" name="fleet" value="vincent"> Vincent is pro he knows everything</label>
+            <label><input type="checkbox" name="fleet" value="kevinl"> Kevin L. did nothing wrong</label>
+            <label><input type="checkbox" name="fleet" value="irfan"> Irfan is just testing stuff</label>
+            <label><input type="checkbox" name="fleet" value="Neeraja"> Neeraja one of us !</label>
+        </div>
 
         <h3>Browser-FormControl-005</h3>
         <form>
@@ -153,32 +238,44 @@
         </form>
 
         <h3>Browser-JavaScript-001</h3>
-        <div style="text-align: left;">
-            <button id="promptButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">Show prompt</button>
+        <div class="button-container">
+            <button id="promptButton" onclick="showPrompt()">Show Prompt</button>
         </div>
-        <script>
-            document.getElementById('promptButton').addEventListener('click', function() {
-                const name = prompt('Please enter your name:', 'Your name');
-                if (name !== null) {
-                    alert('You entered: ' + name);
-                }
-            });
-        </script>
 
         <h3>Browser-JavaScript-002</h3>
-        <div style="text-align: left;">
-            
-            <button id="alertButton" style="margin-top: 10px;">Show Alert</button>
+        <div class="button-container">
+            <button id="alertButton" onclick="showAlert()">Show Alert</button>
         </div>
 
         <h3>Browser-JavaScript-003</h3>
-        <div style="text-align: left;">
-            <button id="confirmButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">Show Confirm Box</button>
+        <div class="button-container">
+            <button id="confirmButton" onclick="showConfirm()">Show Confirm Box</button>
         </div>
 
         <div id="notification"></div>
     </div>
-    <div style="height: 50px;"></div>
-    <a href="index.html" class="back-button" style="display: block; margin: 30px auto; text-align: center; font-size: 18px; text-decoration: none; color: #000; border: 1px solid #000; padding: 10px 20px; border-radius: 5px; transition: background-color 0.3s ease; width: fit-content; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);">Back to Home</a>
+    <div style="height: 20px;"></div>
+    <a href="index.html" class="back-button">Back to Home</a>
+    <script>
+        function showPrompt() {
+            const name = prompt('Please enter your name:', 'Your name');
+            if (name !== null) {
+                alert('You entered: ' + name);
+            }
+        }
+
+        function showAlert() {
+            alert("I am an alert box!");
+        }
+
+        function showConfirm() {
+            let result = confirm("Please press a button. I would really appreciate it if you pressed a button, please? Don't be shy. It's only a button. Button button button.");
+            if (result) {
+                alert("You pressed Yes!");
+            } else {
+                alert("You pressed Cancel.");
+            }
+        }
+    </script>
 </body>
 </html>

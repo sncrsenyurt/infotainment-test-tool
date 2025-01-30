@@ -5,24 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browser Security</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Righteous', cursive;
+        }
+
+        .radio-group {
+            margin-bottom: 20px;
+        }
+
+        .radio-group label {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .radio-group label:hover {
+            background-color: #f8f9fa;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .icon-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 200px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+
+        .icon:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .icon img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+            object-fit: contain;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .icon:hover img {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+        }
+
+        .icon span {
+            color: #000;
+            text-align: center;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+            max-width: 150px;
+            margin: 0 auto;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .icon:hover span {
+            transform: scale(1.05);
+            color: #000;
+        }
+
         .back-button {
             display: inline-block;
-            margin: 30px auto;
-            text-align: center;
-            font-size: 18px;
-            text-decoration: none;
+            padding: 10px 25px;
+            margin-top: 30px;
+            background: white;
             color: #000;
-            border: 1px solid #000;
-            padding: 10px 20px;
-            border-radius: 5px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: background-color 0.3s ease;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+            border: none;
+            cursor: pointer;
         }
+
         .back-button:hover {
-            background-color: #f0f0f0;
+            background: #f8f9fa;
         }
     </style>
 </head>
@@ -31,31 +143,17 @@
         <h1>Browser Security</h1>
         <div class="icon-grid">
             <a href="https://badssl.com/" class="icon" target="_blank">
-                <img src="images/other icons/bad-ssl.png" alt="Browser-Security-007" style="width: 50%;">
+                <img src="images/other icons/bad-ssl.png" alt="Browser-Security-007">
                 <span>Browser-Security-007</span>
             </a>
-            <a href="file:///etc/hosts" class="icon">
-                <img src="images/other icons/hosting.png" alt="Browser-Security-015" style="width: 50%;">
-                <span>Browser-Security-015</span>
-            </a>
-            <a href="ftp://speedtest.tele2.net/1KB.zip" class="icon">
-                <img src="images/other icons/speed.png" alt="Browser-Security-016" style="width: 50%;">
-                <span>Browser-Security-016</span>
-            </a>
-            <a href="https://browseraudit.com" class="icon" target="_blank">
-                <img src="images/other icons/browser audit.png" alt="Browser-Security-018" style="width: 50%;">
-                <span>Browser-Security-018</span>
-            </a>
-            <a href="https://html5test.opensuse.org/" class="icon" target="_blank">
-                <img src="images/other icons/html-5.png" alt="Browser-Security-019" style="width: 50%;">
-                <span>Browser-Security-019</span>
-            </a>
-            <a href="https://www.ssllabs.com/ssltest/viewMyClient.html" class="icon" target="_blank">
-                <img src="images/main-page-icons/ssl.png" alt="SSL Labs" style="width: 50%;">
+            <a href="https://expired.badssl.com/" class="icon" target="_blank">
+                <img src="images/other icons/ssl2.png" alt="Browser-Security-008">
                 <span>Browser-security-008</span>
             </a>
         </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" class="back-button">Back to Home</a>
+        </div>
     </div>
-    <a href="index.html" class="back-button">Back to Home</a>
 </body>
 </html>

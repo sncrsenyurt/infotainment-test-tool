@@ -10,22 +10,89 @@
     <meta name="author" content="Irfan Senyurt">
     <title>S3XY CT</title>
     <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <style>
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes shine {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes colorChange {
+            0% { color: #3498db; }
+            50% { color: #2ecc71; }
+            100% { color: #3498db; }
+        }
+
+        @keyframes gradientText {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
         body {
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background: #fff;
+            font-family: 'Righteous', cursive;
+            color: #2c3e50;
         }
+
         .header {
+            position: relative;
             text-align: center;
-            padding: 10px 0;
+            padding: 40px 0;
+            margin-bottom: 30px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
+
+        .title-container {
+            position: relative;
+            height: 80px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .header h1 {
             margin: 0;
-            padding: 10px;
+            font-size: 2.6em;
+            font-weight: 400;
+            background: linear-gradient(90deg, 
+                #2c3e50, #2c3e50 45%, 
+                #70a1ff 50%, 
+                #2c3e50 55%, #2c3e50);
+            background-size: 200% auto;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            animation: shine 3s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
         .container {
             flex: 1;
             display: flex;
@@ -33,36 +100,178 @@
             align-items: flex-start;
             padding: 20px;
         }
+
         .icon-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            width: 100%;
+            grid-template-columns: repeat(5, 200px);
+            gap: 25px;
+            justify-content: center;
+            margin: 0 auto;
         }
+
         .icon {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-decoration: none;
-            color: black;
-            transition: transform 0.2s;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 200px;
+            width: 200px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
         }
+
         .icon:hover {
-            transform: scale(1.1);
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
         }
+
         .icon img {
-            width: 50%;
-            margin-bottom: 10px;
+            width: 70px;
+            height: 70px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
+
+        .icon:hover img {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+        }
+
         .icon span {
+            color: #000;
             text-align: center;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+            max-width: 150px;
+            margin: 0 auto;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .icon:hover span {
+            transform: scale(1.05);
+            color: #000;
+        }
+
+        .icon span:last-of-type {
+            color: #000;
+            font-size: 0.9em;
+            margin-top: 5px;
+            opacity: 0.7;
+        }
+
+        .icon:hover span:last-of-type {
+            opacity: 1;
+        }
+
+        footer {
+            background: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+        }
+
+        .author-section {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .author-section:hover {
+            background: rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        footer a {
+            color: #000;
+            text-decoration: none;
+            font-family: 'Righteous', cursive;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+        }
+
+        footer a:hover {
+            opacity: 0.7;
+        }
+
+        .welcome-header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .welcome-header h1 {
+            margin: 0;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f1c40f, #3498db);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 8s linear infinite;
+        }
+
+        .welcome-header span {
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .footer a {
+            margin: 0;
+            font-size: 1.2em;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f1c40f, #3498db);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 8s linear infinite;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: none;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 1200px) {
+            .icon-grid { grid-template-columns: repeat(4, 200px); }
+        }
+
+        @media (max-width: 900px) {
+            .icon-grid { grid-template-columns: repeat(3, 200px); }
+        }
+
+        @media (max-width: 600px) {
+            .icon-grid { grid-template-columns: repeat(2, 200px); }
+            .header h1 { font-size: 2em; }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Welcome to Browser Test Tool Page</h1>
+    <div class="welcome-header">
+        <h1>WELCOME TO BROWSER TEST TOOL PAGE</h1>
     </div>
     <div class="container">
         <div class="icon-grid">
@@ -106,6 +315,12 @@
             <a href="unsupported-features.html" class="icon">
                 <img src="images/main-page-icons/unsupported features.png" alt="Unsupported Features">
                 <span>Unsupported Features</span>
+            </a>
+
+           <a href="shaka-player.html" class="icon">
+                 <img src="images/main-page-icons/shaka.png" alt="Shaka Player">
+                 <span>Shaka Player</span>
+            </a>
 
             <a href="https://www.vsynctester.com/" class="icon">
                 <img src="images/main-page-icons/fps2.png" alt="Browser-System-014">
@@ -196,8 +411,8 @@
             </a>
         </div>
     </div>
-    <footer style="font-size: 0.8em; font-family: Arial, sans-serif; text-align: center; margin-top: 20px;">
-        <p>&copy; 2025 <a href="https://irfansenyurt.com" target="_blank">Irfan Senyurt</a>. Developed with passion. All rights reserved.</p>
-    </footer>
+    <div class="footer">
+        <a href="https://irfansenyurt.com" target="_blank">Developed by Irfan Senyurt</a>
+    </div>
 </body>
 </html>

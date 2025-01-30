@@ -3,47 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location & GPS </title>
+    <title>Location</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Righteous', cursive;
+        }
+
+        .icon-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: nowrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 200px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+
+        .icon:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        .icon img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+            object-fit: contain;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .icon:hover img {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+        }
+
+        .icon span {
+            color: #000;
+            text-align: center;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+            max-width: 150px;
+            margin: 0 auto;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .icon:hover span {
+            transform: scale(1.05);
+            color: #000;
+        }
+
         .back-button {
             display: inline-block;
-            margin: 30px auto;
-            text-align: center;
-            font-size: 18px;
-            text-decoration: none;
+            padding: 10px 25px;
+            margin-top: 30px;
+            background: white;
             color: #000;
-            border: 1px solid #000;
-            padding: 10px 20px;
-            border-radius: 5px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: background-color 0.3s ease;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+            border: none;
+            cursor: pointer;
         }
+
         .back-button:hover {
-            background-color: #f0f0f0;
+            background: #f8f9fa;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Location & GPS </h1>
-        <div class="icon-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <h1>Location & GPS</h1>
+        <div class="icon-grid">
             <a href="https://teslawaze.azurewebsites.net/" class="icon" target="_blank">
-                <img src="images/other icons/teslawaze.png" alt="Teslawaze" style="width: 75%;">
+                <img src="images/other icons/teslawaze.png" alt="Teslawaze">
                 <span>Teslawaze</span>
             </a>
-            <a href="https://gpswatcher.tiiny.site/" class="icon" target="_blank">
-                <img src="images/other icons/gpswatch.png" alt="GPSWatcher" style="width: 75%;">
+            <a href="https://gpswatcher.azurewebsites.net/" class="icon" target="_blank">
+                <img src="images/other icons/gpswatch.png" alt="GPSWatcher">
                 <span>GPSWatcher</span>
             </a>
-            <a href="https://xhaus.com/headers" class="icon" target="_blank">
-                <img src="images/other icons/localization.png" alt="Localization-002" style="width: 75%;">
+            <a href="https://www.google.com/maps" class="icon" target="_blank">
+                <img src="images/other icons/localization.png" alt="Localization-002">
                 <span>Localization-002</span>
             </a>
         </div>
-        <a href="index.html" class="back-button">Back to Home</a>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" class="back-button">Back to Home</a>
+        </div>
     </div>
 </body>
 </html>
