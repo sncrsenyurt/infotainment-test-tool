@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multimedia</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Shaka Player Demo</title>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,12 +14,8 @@
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            text-align: center;
         }
 
         h1 {
@@ -115,32 +110,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>Multimedia Video Playback</h1>
+        <h1 style="text-align: center;">Shaka Player Demo Links</h1>
         <div class="icon-grid">
-            <a href="https://tekeye.uk/html/html5-video-test-page" class="icon" >
-                <img src="images/other icons/MediaCodec-001.png" alt="MediaCodec-001" style="width: 60px; height: 60px;">
-                <span>MediaCodec-001</span>
-                <span>(HTML5 Video Test)</span>
+            <a href="https://shaka-player-demo.appspot.com" class="icon" target="_blank">
+                <img src="images/main-page-icons/shaka.png" alt="Shaka Player Demo">
+                <span>Shaka Player Demo Web Page</span>
             </a>
-            <a href="https://hpr.dogphilosophy.net/test/" class="icon" >
-                <img src="images/other icons/MediaCodec-003.png" alt="MediaCodec-003" style="width: 60px; height: 60px;">
-                <span>MediaCodec-003</span>
-                <span>(Audio Test)</span>
-            </a>
-            <a href="https://archive.org/details/5.1SurroundSoundTestFilesVariousFormatsAACAC3MP4DTSWAV" class="icon" target="_blank">
-                <img src="images/other icons/audio.png" alt="BasicFunctions-009" style="width: 60px; height: 60px;">
-                <span>BasicFunctions-009</span>
-                <span>(Multimedia-VideoPlayback)</span>
-            </a>
-            <a href="https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_video_autoplay" class="icon" target="_blank">
-                <img src="images/other icons/BasicFunctions-011.png" alt="BasicFunctions-011" style="width: 60px; height: 60px;">
-                <span>BasicFunctions-011</span>
-                <span>(w3School autoplay)</span>
+            <a href="https://shaka-player-demo.appspot.com/demo/#audiolang=en-US;textlang=en-US;uilang=en-US;assetBase64=eyJuYW1lIjoiU2ludGVsIDRrIChtdWx0aWNvZGVjLCBXaWRldmluZSkiLCJzaG9ydE5hbWUiOiIiLCJpY29uVXJpIjoiaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3NoYWthLWFzc2V0LWljb25zL3NpbnRlbC5wbmciLCJtYW5pZmVzdFVyaSI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9zaGFrYS1kZW1vLWFzc2V0cy9zaW50ZWwtd2lkZXZpbmUvZGFzaC5tcGQiLCJzb3VyY2UiOiJTaGFrYSIsImZvY3VzIjpmYWxzZSwiZGlzYWJsZWQiOmZhbHNlLCJleHRyYVRleHQiOltdLCJleHRyYVVodW1ibmFpbCI6W10sImV4dHJhQ2hhcHRlciI6W10sImNlcnRpZmljYXRlVXJpIjpudWxsLCJkZXNjcmlwdGlvbiI6bnVsbCwiaXNGZWF0dXJlZCI6ZmFsc2UsImRybSI6WyJXaWRldmluZSBEUk0iXSwiZmVhdHVyZXMiOlsiREFTSCIsIkRvd25sb2FkYWJsZSIsIk1QNCIsIlN1YnRpdGxlcyIsIlVsdHJhLWhpZ2ggZGVmaW5pdGlvbiIsIlZPRCIsIldlYk0iXSwibGljZW5zZVNlcnZlcnMiOnsiX190eXBlX18iOiJtYXAiLCJjb20ud2lkZXZpbmUuYWxwaGEiOiJodHRwczovL2N3aXAtc2hha2EtcHJveHkuYXBwc3BvdC5jb20vbm9fYXV0aCJ9LCJvZmZsaW5lTGljZW5zZVNlcnZlcnMiOnsiX190eXBlX18iOiJtYXAifSwibGljZW5zZVJlcXVlc3RIZWFkZXJzIjp7Il9fdHlwZV9fIjoibWFwIn0sInJlcXVlc3RGaWx0ZXIiOm51bGwsInJlc3BvbnNlRmlsdGVyIjpudWxsLCJjbGVhcktleXMiOnsiX190eXBlX18iOiJtYXAifSwiZXh0cmFDb25maWciOnsiZHJtIjp7ImFkdmFuY2VkIjp7ImNvbS53aWRldmluZS5hbHBoYSI6eyJzZXJ2ZXJDZXJ0aWZpY2F0ZVVyaSI6Imh0dHBzOi8vY3dpcC1zaGFrYS1wcm94eS5hcHBzcG90LmNvbS9zZXJ2aWNlLWNlcnQifX0sInNlcnZlcnMiOnsiY29tLndpZGV2aW5lLmFscGhhIjoiaHR0cHM6Ly9jd2lwLXNoYWthLXByb3h5LmFwcHNwb3QuY29tL25vX2F1dGgifX19LCJleHRyYVVpQ29uZmlnIjpudWxsLCJhZFRhZ1VyaSI6bnVsbCwiaW1hVmlkZW9JZCI6bnVsbCwiaW1hQXNzZXRLZXkiOm51bGwsImltYUNvbnRlbnRTcmNJZCI6bnVsbCwiaW1hTWFuaWZlc3RUeXBlIjpudWxsLCJtZWRpYVRhaWxvclVybCI6bnVsbCwibWVkaWFUYWlsb3JBZHNQYXJhbXMiOm51bGwsInVzZUlNQSI6dHJ1ZSwibWltZVR5cGUiOm51bGx9;panel=HOME;build=uncompiled" class="icon" target="_blank">
+                <img src="images/main-page-icons/shaka.png" alt="Shaka Player Advanced Demo">
+                <span>Shaka Player Demo Video</span>
             </a>
         </div>
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="index.html" class="back-button">Back to Home</a>
-        </div>
+        <a href="index.html" class="back-button">Back to Home Page</a>
     </div>
 </body>
 </html>
