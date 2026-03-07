@@ -87,13 +87,12 @@
                 alert(`I am an alert box! ${alertCount}`);
             });
 
-            document.getElementById('confirmButton').addEventListener('click', function() {
-                let result = confirm("Please press a button. I would really appreciate it if you pressed a button, please? Don't be shy. It's only a button. Button button button.");
-                if (result) {
-                    alert("You pressed Yes!");
-                } else {
-                    alert("You pressed Cancel.");
-                }
+            document.getElementById('yesButton').addEventListener('click', function() {
+                document.getElementById('confirmResultYes').textContent = 'yes yes';
+            });
+
+            document.getElementById('noButton').addEventListener('click', function() {
+                document.getElementById('confirmResultNo').textContent = 'no no';
             });
         };
     </script>
@@ -155,12 +154,13 @@
         <h3>Browser-JavaScript-001</h3>
         <div style="text-align: left;">
             <button id="promptButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">Show prompt</button>
+            <p id="promptResults"></p>
         </div>
         <script>
             document.getElementById('promptButton').addEventListener('click', function() {
                 const name = prompt('Please enter your name:', 'Your name');
                 if (name !== null) {
-                    alert('You entered: ' + name);
+                    document.getElementById('promptResults').textContent = 'You entered: ' + name;
                 }
             });
         </script>
@@ -173,7 +173,10 @@
 
         <h3>Browser-JavaScript-003</h3>
         <div style="text-align: left;">
-            <button id="confirmButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">Show Confirm Box</button>
+            <button id="yesButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">Yes</button>
+            <button id="noButton" style="margin-top: 10px; background-color: #f0f0f0; border: 1px solid #ccc; padding: 9px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; font-size: 13px; color: #000;">No</button>
+            <p id="confirmResultYes"></p>
+            <p id="confirmResultNo"></p>
         </div>
 
         <div id="notification"></div>
