@@ -236,8 +236,7 @@
 
         <h3>Browser-JavaScript-003</h3>
         <div class="button-container">
-            <button id="yesButton" onclick="showConfirmYes()">Yes</button>
-            <button id="noButton" onclick="showConfirmNo()">No</button>
+            <button id="confirmButton" onclick="showConfirm()">Show Confirm Box</button>
         </div>
         <p id="confirmResultYes" style="text-align: center;"></p>
         <p id="confirmResultNo" style="text-align: center;"></p>
@@ -250,7 +249,7 @@
         function showPrompt() {
             const name = prompt('Please enter your name:', 'Your name');
             if (name !== null) {
-                document.getElementById('promptResults').textContent = 'You entered: ' + name;
+                document.getElementById('promptResults').textContent = name;
             }
         }
 
@@ -258,12 +257,13 @@
             alert("I am an alert box!");
         }
 
-        function showConfirmYes() {
-            document.getElementById('confirmResultYes').textContent = 'yes yes';
-        }
-
-        function showConfirmNo() {
-            document.getElementById('confirmResultNo').textContent = 'no no';
+        function showConfirm() {
+            let result = confirm("Press a button");
+            if (result) {
+                document.getElementById('confirmResultYes').textContent = "yes yes";
+            } else {
+                document.getElementById('confirmResultNo').textContent = "no no";
+            }
         }
     </script>
 </body>
