@@ -250,6 +250,8 @@
             const name = prompt('Please enter your name:', 'Your name');
             if (name !== null) {
                 document.getElementById('promptResults').textContent = name;
+            } else {
+                document.getElementById('promptResults').textContent = '';
             }
         }
 
