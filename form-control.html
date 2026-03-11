@@ -182,15 +182,14 @@
         </form>
 
         <h3>Browser-FormControl-002</h3>
-        <p>Choose your favorite Test Engineer:</p>
+        <p>Choose my favorite Engineer:</p>
         <form>
-            <input type="radio" id="html" name="fav_language" value="HTML">
-            <label for="html">Brian</label><br>
-            <input type="radio" id="css" name="fav_language" value="CSS">
-            <label for="css">Irfan</label><br>
-            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-            <label for="javascript">Terry</label>
-            <br>
+            <div class="radio-group">
+                <label><input type="radio" id="html" name="fav_language" value="HTML"> Brian</label>
+                <label><input type="radio" id="css" name="fav_language" value="CSS"> Irfan</label>
+                <label><input type="radio" id="javascript" name="fav_language" value="JavaScript"> Terry</label>
+                <label><input type="radio" id="james" name="fav_language" value="James"> James</label>
+            </div>
             <input type="submit" value="Submit" onclick="document.getElementById('formResult002').textContent = document.querySelector('input[name=fav_language]:checked').value; return false;">
             <p id="formResult002"></p>
         </form>
