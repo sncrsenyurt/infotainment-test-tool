@@ -190,7 +190,7 @@
                 <label><input type="radio" id="javascript" name="fav_language" value="JavaScript"> Terry</label>
                 <label><input type="radio" id="james" name="fav_language" value="James"> James</label>
             </div>
-            <input type="submit" value="Submit" onclick="document.getElementById('formResult002').textContent = document.querySelector('input[name=fav_language]:checked').value; return false;">
+            <input type="submit" id="radioSubmit" value="Submit" onclick="document.getElementById('formResult002').textContent = document.querySelector('input[name=fav_language]:checked').value; return false;">
             <p id="formResult002"></p>
         </form>
 
@@ -204,7 +204,7 @@
             <label><input type="checkbox" name="fleet" value="modelS"> Model S</label>
             <label><input type="checkbox" name="fleet" value="modelX"> Model X</label>
         </div>
-        <button onclick="var checked = document.querySelectorAll('input[name=fleet]:checked'); var values = Array.from(checked).map(function(cb) { return cb.value; }); document.getElementById('formResult003').textContent = values.join(' ');">Submit</button>
+        <button id="checkboxSubmit" onclick="var checked = document.querySelectorAll('input[name=fleet]:checked'); var values = Array.from(checked).map(function(cb) { return cb.value; }); document.getElementById('formResult003').textContent = values.join(' ');">Submit</button>
         <p id="formResult003"></p>
 
         <h3>Browser-FormControl-005</h3>
