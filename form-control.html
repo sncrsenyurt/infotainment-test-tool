@@ -160,7 +160,7 @@
             event.preventDefault();
             const fname = document.getElementById('fname').value;
             const lname = document.getElementById('lname').value;
-            alert(`First name: ${fname}\nLast name: ${lname}`);
+            document.getElementById('formResult001').textContent = fname + ' ' + lname;
         }
 
         window.onload = function() {
@@ -178,6 +178,7 @@
           <label for="lname">Last name:</label><br>
           <input type="text" id="lname" name="lname"><br><br>
           <input type="submit" value="Submit">
+          <p id="formResult001"></p>
         </form>
 
         <h3>Browser-FormControl-002</h3>
@@ -187,8 +188,11 @@
             <label for="html">Brian</label><br>
             <input type="radio" id="css" name="fav_language" value="CSS">
             <label for="css">Irfan</label><br>
-            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-            <label for="javascript">Terry</label>
+            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+            <label for="javascript">Terry</label>
+            <br>
+            <input type="submit" value="Submit" onclick="document.getElementById('formResult002').textContent = document.querySelector('input[name=fav_language]:checked').value; return false;">
+            <p id="formResult002"></p>
         </form>
 
         <h3>Browser-FormControl-003</h3>
@@ -201,6 +205,8 @@
             <label><input type="checkbox" name="fleet" value="irfan"> Irfan is just testing stuff</label>
             <label><input type="checkbox" name="fleet" value="Neeraja"> Neeraja is one of us !</label>
         </div>
+        <button onclick="var checked = document.querySelectorAll('input[name=fleet]:checked'); var values = Array.from(checked).map(function(cb) { return cb.value; }); document.getElementById('formResult003').textContent = values.join(' ');">Submit</button>
+        <p id="formResult003"></p>
 
         <h3>Browser-FormControl-005</h3>
         <form>
