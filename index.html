@@ -335,7 +335,7 @@
                 <span>User Agent Check (UI-001)</span>
             </a>
             <!-- User Agent automation element – readable by test scripts via #userAgentDemo -->
-            <p id="userAgentDemo" style="display:none;" aria-hidden="true"></p>
+            <p id="userAgentDemo" style="visibility:hidden; position:absolute; left:-9999px;" aria-hidden="true"></p>
             <script>document.getElementById('userAgentDemo').textContent = navigator.userAgent;</script>
             <a href="https://webglsamples.org/aquarium/aquarium.html" class="icon" target="_blank">
                 <img src="images/main-page-icons/fps.png" alt="Browser-Multimedia-007" style="width: 50%;">
