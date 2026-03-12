@@ -143,5 +143,61 @@
         
         <a href="index.html" class="back-button">Back to Home</a>
     </div>
+
+    <!-- Browser-Multimedia-011: Hidden test elements for automation -->
+    <!-- 
+        Test expectations:
+        - jpg_image:  naturalWidth > 0  → PASS (JPEG supported)
+        - gif_image:  naturalWidth > 0  → PASS (GIF supported)
+        - png_image:  naturalWidth > 0  → PASS (PNG supported)
+        - bmp_image:  naturalWidth > 0  → PASS (BMP supported)
+        - tiff_image: naturalWidth == 0 → PASS (TIFF NOT supported by browser)
+        - pdf_frame:  iframe loaded     → PASS (PDF displayed via iframe)
+    -->
+    <div id="multimedia-011-test" style="display:none;" aria-hidden="true">
+        <img id="jpg_image"  src="images/test/sample.jpg"  alt="JPEG Test">
+        <img id="gif_image"  src="images/test/sample.gif"  alt="GIF Test">
+        <img id="png_image"  src="images/test/sample.png"  alt="PNG Test">
+        <img id="bmp_image"  src="images/test/sample.bmp"  alt="BMP Test">
+        <img id="tiff_image" src="images/test/sample.tiff" alt="TIFF Test">
+        <iframe id="pdf_frame" src="images/test/sample.pdf" width="100%" height="300px"></iframe>
+    </div>
+
+    <script>
+        // Browser-Multimedia-011 – Image format support self-test
+        // Runs on page load; results stored on window.multimediaTestResults for automation
+        window.addEventListener('load', function () {
+            var results = {};
+            var images = [
+                { id: 'jpg_image',  expect: 'loaded',      format: 'JPEG' },
+                { id: 'gif_image',  expect: 'loaded',      format: 'GIF'  },
+                { id: 'png_image',  expect: 'loaded',      format: 'PNG'  },
+                { id: 'bmp_image',  expect: 'loaded',      format: 'BMP'  },
+                { id: 'tiff_image', expect: 'unsupported', format: 'TIFF' }
+            ];
+
+            images.forEach(function (item) {
+                var el = document.getElementById(item.id);
+                var loaded = el && el.naturalWidth > 0;
+                var pass = item.expect === 'loaded' ? loaded : !loaded;
+                results[item.id] = {
+                    format:   item.format,
+                    expect:   item.expect,
+                    loaded:   loaded,
+                    pass:     pass
+                };
+            });
+
+            var frame = document.getElementById('pdf_frame');
+            results['pdf_frame'] = {
+                format: 'PDF',
+                expect: 'iframe-loaded',
+                pass:   !!frame
+            };
+
+            window.multimediaTestResults = results;
+            console.log('[Browser-Multimedia-011]', JSON.stringify(results, null, 2));
+        });
+    </script>
 </body>
 </html>

@@ -330,10 +330,13 @@
                 <img src="images/main-page-icons/remote.jpeg" alt="Browser-Extensions-001">
                 <span>Browser-Extensions-001</span>
             </a>
-            <a href="https://www.whatismybrowser.com/detect/what-is-my-user-agent/" class="icon" target="_blank">
+            <a href="user-agent.html" class="icon">
                 <img src="images/main-page-icons/ui.png" alt="User Agent Check (UI)">
                 <span>User Agent Check (UI-001)</span>
             </a>
+            <!-- User Agent automation element – readable by test scripts via #userAgentDemo -->
+            <p id="userAgentDemo" style="display:none;" aria-hidden="true"></p>
+            <script>document.getElementById('userAgentDemo').textContent = navigator.userAgent;</script>
             <a href="https://webglsamples.org/aquarium/aquarium.html" class="icon" target="_blank">
                 <img src="images/main-page-icons/fps.png" alt="Browser-Multimedia-007" style="width: 50%;">
                 <span>Browser-Multimedia-007</span>

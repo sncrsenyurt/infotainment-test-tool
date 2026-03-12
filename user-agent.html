@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Agent Check – UI-001</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Righteous', cursive;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #2c3e50;
+        }
+
+        h1 {
+            font-size: 2em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg,
+                #2c3e50, #2c3e50 45%,
+                #70a1ff 50%,
+                #2c3e50 55%, #2c3e50);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0%   { background-position: -200% center; }
+            100% { background-position:  200% center; }
+        }
+
+        .subtitle {
+            font-size: 0.85em;
+            color: #888;
+            letter-spacing: 1px;
+            margin-bottom: 36px;
+        }
+
+        /* Raw UA string card */
+        .ua-raw-card {
+            background: #1e2533;
+            border-radius: 14px;
+            padding: 24px 28px;
+            width: 100%;
+            max-width: 860px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .ua-raw-card .label {
+            font-size: 0.7em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #70a1ff;
+            margin-bottom: 10px;
+        }
+
+        .ua-raw-card p {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.82em;
+            color: #e0e6f0;
+            line-height: 1.7;
+            word-break: break-all;
+        }
+
+        /* Parsed info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            width: 100%;
+            max-width: 860px;
+            margin-bottom: 36px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 22px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+        }
+
+        .info-card .card-label {
+            font-size: 0.68em;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+
+        .info-card .card-value {
+            font-size: 1em;
+            font-weight: bold;
+            color: #2c3e50;
+            word-break: break-word;
+        }
+
+        .info-card .card-value.mono {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.88em;
+        }
+
+        /* Status badge */
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+        .badge.pass  { background: #e8f8ee; color: #27ae60; }
+        .badge.warn  { background: #fff8e1; color: #f39c12; }
+        .badge.fail  { background: #fdecea; color: #e74c3c; }
+
+        /* Copy button */
+        .copy-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 28px;
+            font-family: 'Righteous', cursive;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-bottom: 36px;
+        }
+        .copy-btn:hover { background: #3d5166; }
+        .copy-btn.copied { background: #27ae60; }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 30px;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: background 0.2s ease;
+        }
+        .back-button:hover { background: #f0f2f5; }
+
+        /* Hidden automation target */
+        #userAgentString { display: none; }
+    </style>
+</head>
+<body>
+
+    <h1>User Agent Check</h1>
+    <p class="subtitle">UI-001 &nbsp;·&nbsp; Local Detection</p>
+
+    <!-- Raw UA string — hidden element for automation scripts -->
+    <p id="userAgentString" aria-hidden="true"></p>
+
+    <div class="ua-raw-card">
+        <div class="label">Raw User-Agent String</div>
+        <p id="ua-raw">—</p>
+    </div>
+
+    <div class="info-grid" id="info-grid"></div>
+
+    <button class="copy-btn" id="copy-btn" onclick="copyUA()">Copy UA String</button>
+
+    <a href="index.html" class="back-button">← Back to Home</a>
+
+    <script>
+        var ua = navigator.userAgent;
+
+        // Populate hidden automation element
+        document.getElementById('userAgentString').textContent = ua;
+
+        // Raw display
+        document.getElementById('ua-raw').textContent = ua;
+
+        // ---------- Parser ----------
+        function detect() {
+            var result = {
+                browser:  'Unknown',
+                version:  'Unknown',
+                engine:   'Unknown',
+                os:       'Unknown',
+                device:   'Desktop',
+                language: navigator.language || 'Unknown',
+                platform: navigator.platform  || 'Unknown',
+                cookies:  navigator.cookieEnabled,
+                online:   navigator.onLine,
+                java:     false
+            };
+
+            // Browser + Version
+            var browsers = [
+                { name: 'Edge',    rx: /Edg(?:e|\/)([\d.]+)/ },
+                { name: 'Samsung', rx: /SamsungBrowser\/([\d.]+)/ },
+                { name: 'Opera',   rx: /(?:OPR|Opera)\/([\d.]+)/ },
+                { name: 'Chrome',  rx: /(?:Chrome|CriOS)\/([\d.]+)/ },
+                { name: 'Firefox', rx: /(?:Firefox|FxiOS)\/([\d.]+)/ },
+                { name: 'Safari',  rx: /Version\/([\d.]+).*Safari/ }
+            ];
+            for (var b of browsers) {
+                var m = ua.match(b.rx);
+                if (m) { result.browser = b.name; result.version = m[1]; break; }
+            }
+
+            // Engine
+            if      (/Gecko\//.test(ua) && /Firefox/.test(ua)) result.engine = 'Gecko';
+            else if (/AppleWebKit/.test(ua))                    result.engine = 'WebKit / Blink';
+            else if (/Trident/.test(ua))                        result.engine = 'Trident';
+
+            // OS
+            if      (/Windows NT 10/.test(ua)) result.os = 'Windows 10/11';
+            else if (/Windows NT 6.3/.test(ua)) result.os = 'Windows 8.1';
+            else if (/Windows NT 6.1/.test(ua)) result.os = 'Windows 7';
+            else if (/Windows/.test(ua))        result.os = 'Windows';
+            else if (/Android ([\d.]+)/.test(ua)) result.os = 'Android ' + ua.match(/Android ([\d.]+)/)[1];
+            else if (/iPhone OS ([\d_]+)/.test(ua)) result.os = 'iOS ' + ua.match(/iPhone OS ([\d_]+)/)[1].replace(/_/g,'.');
+            else if (/iPad.*OS ([\d_]+)/.test(ua))  result.os = 'iPadOS ' + ua.match(/CPU OS ([\d_]+)/)[1].replace(/_/g,'.');
+            else if (/Mac OS X/.test(ua))       result.os = 'macOS';
+            else if (/Linux/.test(ua))          result.os = 'Linux';
+            else if (/CrOS/.test(ua))           result.os = 'ChromeOS';
+
+            // Device
+            if      (/Mobi|Android/i.test(ua)) result.device = 'Mobile';
+            else if (/Tablet|iPad/i.test(ua))  result.device = 'Tablet';
+
+            return result;
+        }
+
+        var info = detect();
+
+        // ---------- Render cards ----------
+        var cards = [
+            { label: 'Browser',         value: info.browser,  extra: info.version,      icon: '🌐' },
+            { label: 'Version',          value: info.version,  mono: true,               icon: '🔢' },
+            { label: 'Engine',           value: info.engine,                             icon: '⚙️'  },
+            { label: 'Operating System', value: info.os,                                icon: '💻' },
+            { label: 'Device Type',      value: info.device,                             icon: '📱' },
+            { label: 'Platform',         value: info.platform, mono: true,               icon: '🖥️'  },
+            { label: 'Language',         value: info.language,                           icon: '🌍' },
+            { label: 'Cookies',          value: info.cookies ? 'Enabled' : 'Disabled',
+                badge: info.cookies ? 'pass' : 'warn',                                   icon: '🍪' },
+            { label: 'Network',          value: info.online  ? 'Online'   : 'Offline',
+                badge: info.online  ? 'pass' : 'fail',                                   icon: '📶' }
+        ];
+
+        var grid = document.getElementById('info-grid');
+        cards.forEach(function(c) {
+            var div = document.createElement('div');
+            div.className = 'info-card';
+            var badge = c.badge
+                ? '<br><span class="badge ' + c.badge + '">' + c.value + '</span>'
+                : '';
+            div.innerHTML =
+                '<div class="card-label">' + c.icon + '  ' + c.label + '</div>' +
+                '<div class="card-value' + (c.mono ? ' mono' : '') + '">' +
+                    (c.badge ? (c.label === 'Cookies' ? 'Cookies' : 'Network') : c.value) + badge +
+                '</div>';
+            // Fix: for badge cards show label cleanly
+            if (c.badge) {
+                div.querySelector('.card-value').innerHTML =
+                    '<span class="badge ' + c.badge + '">' + c.value + '</span>';
+            }
+            grid.appendChild(div);
+        });
+
+        // ---------- Copy ----------
+        function copyUA() {
+            var btn = document.getElementById('copy-btn');
+            navigator.clipboard.writeText(ua).then(function() {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(function() {
+                    btn.textContent = 'Copy UA String';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
