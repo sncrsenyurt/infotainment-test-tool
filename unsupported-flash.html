@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 { text-align: center; margin-bottom: 30px; }
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            padding: 40px 50px;
+            min-width: 420px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .card h2 {
+            font-size: 1.1em;
+            margin: 0 0 20px 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        td {
+            padding: 11px 8px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95em;
+        }
+        td:first-child { color: #555; width: 55%; }
+        td:last-child { font-weight: bold; text-align: right; }
+        .status-ok      { color: #22a06b; }
+        .status-fail    { color: #e53935; }
+        .status-unknown { color: #999; }
+        .icon { font-size: 1.1em; margin-right: 4px; }
+        .back-button {
+            display: inline-block;
+            padding: 10px 25px;
+            margin-top: 30px;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button:hover { background: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <h1>Flash Test</h1>
+    <div class="card">
+        <h2>Flash Detection</h2>
+        <table>
+            <tr>
+                <td>Flash Player</td>
+                <td id="result-flash" class="status-unknown">Checking...</td>
+            </tr>
+            <tr>
+                <td>Plugin in navigator.plugins</td>
+                <td id="result-plugin" class="status-unknown">Checking...</td>
+            </tr>
+            <tr>
+                <td>Flash Version</td>
+                <td id="result-version" class="status-unknown">Checking...</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Automation anchor: otomasyon sayfa text'inde "this plugin is not" string'ini arar -->
+    <div id="automation-anchor">
+        <p>this plugin is not supported</p>
+        <embed type="application/x-shockwave-flash" src="nonexistent.swf" width="1" height="1">
+    </div>
+
+    <a href="unsupported-features.html" class="back-button">Back</a>
+
+    <script>
+        function setResult(id, supported, trueLabel, falseLabel) {
+            const el = document.getElementById(id);
+            if (supported) {
+                el.innerHTML = '<span class="icon">✔</span>' + trueLabel;
+                el.className = 'status-ok';
+            } else {
+                el.innerHTML = '<span class="icon">✖</span>' + falseLabel;
+                el.className = 'status-fail';
+            }
+        }
+
+        function setNeutral(id, label) {
+            const el = document.getElementById(id);
+            el.innerHTML = label;
+            el.className = 'status-unknown';
+        }
+
+        function detectFlashPlugin() {
+            if (navigator.plugins) {
+                for (let i = 0; i < navigator.plugins.length; i++) {
+                    const n = navigator.plugins[i].name;
+                    if (n.indexOf('Flash') !== -1 || n.indexOf('Shockwave') !== -1) return true;
+                }
+            }
+            return false;
+        }
+
+        function detectFlashActiveX() {
+            try {
+                const ax = new window.ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+                return ax.GetVariable('$version') || 'Found';
+            } catch(e) {}
+            return null;
+        }
+
+        function getFlashVersion() {
+            if (navigator.plugins && navigator.plugins['Shockwave Flash']) {
+                return navigator.plugins['Shockwave Flash'].description;
+            }
+            try {
+                const ax = new window.ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+                return ax.GetVariable('$version');
+            } catch(e) {}
+            return null;
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const pluginFound = detectFlashPlugin();
+            const axFound     = !!detectFlashActiveX();
+            const supported   = pluginFound || axFound;
+            const version     = getFlashVersion();
+
+            setResult('result-flash',   supported,   'Flash Player Found',         'Flash Plug-In not found');
+            setResult('result-plugin',  pluginFound, 'Found in navigator.plugins', 'Not in navigator.plugins');
+            setNeutral('result-version', version ? version : '—');
+        });
+    </script>
+</body>
+</html>

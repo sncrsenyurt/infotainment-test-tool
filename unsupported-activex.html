@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActiveX Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 { text-align: center; margin-bottom: 30px; }
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            padding: 40px 50px;
+            min-width: 420px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .card h2 {
+            font-size: 1.1em;
+            margin: 0 0 20px 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        td {
+            padding: 11px 8px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95em;
+        }
+        td:first-child { color: #555; width: 55%; }
+        td:last-child { font-weight: bold; text-align: right; }
+        .status-ok   { color: #22a06b; }
+        .status-fail { color: #e53935; }
+        .status-unknown { color: #999; }
+        .icon { font-size: 1.1em; margin-right: 4px; }
+        .back-button {
+            display: inline-block;
+            padding: 10px 25px;
+            margin-top: 30px;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button:hover { background: #f8f9fa; }
+        /* Automation element — hidden visually but present in DOM */
+    </style>
+</head>
+<body>
+    <h1>ActiveX Test</h1>
+    <div class="card">
+        <h2>ActiveX Detection</h2>
+        <table>
+            <tr>
+                <td>ActiveX</td>
+                <td id="result-activex" class="status-unknown">Checking...</td>
+            </tr>
+            <tr>
+                <td>ActiveXObject Available</td>
+                <td id="result-axobject" class="status-unknown">Checking...</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Automation anchor: otomasyon bu <b> elementinin text'ini kontrol eder -->
+    <object id="automation-anchor" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1" height="1">
+        <b>WARNING: ActiveX component could not be accessed!</b>
+    </object>
+
+    <a href="unsupported-features.html" class="back-button">Back</a>
+
+    <script>
+        function setResult(id, supported, trueLabel, falseLabel) {
+            const el = document.getElementById(id);
+            if (supported) {
+                el.innerHTML = '<span class="icon">✔</span>' + trueLabel;
+                el.className = 'status-ok';
+            } else {
+                el.innerHTML = '<span class="icon">✖</span>' + falseLabel;
+                el.className = 'status-fail';
+            }
+        }
+
+        function detectActiveX() {
+            if (typeof window.ActiveXObject !== 'undefined') return true;
+            try { new window.ActiveXObject('htmlfile'); return true; } catch(e) {}
+            return false;
+        }
+
+        function detectActiveXObject() {
+            try { new window.ActiveXObject('Microsoft.XMLHTTP'); return true; } catch(e) {}
+            return false;
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const axSupport = detectActiveX();
+            const axObject  = detectActiveXObject();
+
+            setResult('result-activex',  axSupport, 'ActiveX Supported',       'ActiveX Not Supported');
+            setResult('result-axobject', axObject,  'ActiveXObject Available',  'ActiveXObject Not Available');
+        });
+    </script>
+</body>
+</html>
