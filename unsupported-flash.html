@@ -69,6 +69,10 @@
 </head>
 <body>
     <h1>Flash Test</h1>
+
+    <!-- Automation anchor: otomasyon sayfa text'inde "this plugin is not" string'ini arar -->
+    <p id="plugin-warning" style="font-size:1.4em; font-weight:bold; text-align:center; color:#e53935; margin:0 0 20px 0; letter-spacing:0.5px;">this plugin is not supported</p>
+
     <div class="card">
         <h2>Flash Detection</h2>
         <table>
@@ -87,9 +91,8 @@
         </table>
     </div>
 
-    <!-- Automation anchor: otomasyon sayfa text'inde "this plugin is not" string'ini arar -->
+    <!-- Automation anchor: embed elementi -->
     <div id="automation-anchor">
-        <p>this plugin is not supported</p>
         <embed type="application/x-shockwave-flash" src="nonexistent.swf" width="1" height="1">
     </div>
 
