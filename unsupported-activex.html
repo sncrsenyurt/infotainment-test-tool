@@ -123,7 +123,7 @@
     <!-- automation anchor: otomasyon <b> text'ini kontrol eder -->
     <div id="automation-anchor">
         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1" height="1">
-            <b>WARNING: ActiveX component could not be accessed!</b>
+            <b id="activex-warning"></b>
         </object>
     </div>
 
@@ -146,8 +146,15 @@
         }
 
         window.addEventListener('DOMContentLoaded', function () {
-            set('r-activex',  detectActiveX(),       'ActiveX Supported',        'ActiveX Not Supported');
-            set('r-axobject', detectActiveXObject(),  'ActiveXObject Available',  'ActiveXObject Not Available');
+            const ax  = detectActiveX();
+            const axo = detectActiveXObject();
+
+            document.getElementById('activex-warning').textContent = (ax || axo)
+                ? 'ActiveX component is active'
+                : 'WARNING: ActiveX component could not be accessed!';
+
+            set('r-activex',  ax,  'ActiveX Supported',       'ActiveX Not Supported');
+            set('r-axobject', axo, 'ActiveXObject Available', 'ActiveXObject Not Available');
         });
     </script>
 </body>

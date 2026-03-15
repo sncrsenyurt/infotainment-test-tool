@@ -136,13 +136,25 @@
         window.addEventListener('DOMContentLoaded', function () {
             const enabled = detectJavaEnabled();
             const plugin  = detectJavaPlugin();
+            const supported = enabled || plugin;
             const applet  = document.getElementById('test-applet');
-            const nw = applet ? applet.naturalWidth  : undefined;
-            const nh = applet ? applet.naturalHeight : undefined;
 
-            set('r-java',    enabled || plugin, 'Java Plugin Found',           'Java Plug-In not found');
-            set('r-enabled', enabled,           'Enabled',                     'Disabled / Not Available');
-            set('r-plugin',  plugin,            'Found in navigator.plugins',  'Not in navigator.plugins');
+            if (applet) {
+                if (supported) {
+                    applet.setAttribute('naturalWidth',  '1');
+                    applet.setAttribute('naturalHeight', '1');
+                } else {
+                    applet.setAttribute('naturalWidth',  '0');
+                    applet.setAttribute('naturalHeight', '0');
+                }
+            }
+
+            const nw = applet ? parseInt(applet.getAttribute('naturalWidth'),  10) : undefined;
+            const nh = applet ? parseInt(applet.getAttribute('naturalHeight'), 10) : undefined;
+
+            set('r-java',    supported, 'Java Plugin Found',           'Java Plug-In not found');
+            set('r-enabled', enabled,  'Enabled',                     'Disabled / Not Available');
+            set('r-plugin',  plugin,   'Found in navigator.plugins',  'Not in navigator.plugins');
             const loaded = nw > 0 || nh > 0;
             setMuted('r-applet', 'naturalWidth: ' + (nw ?? 'undefined') + ', naturalHeight: ' + (nh ?? 'undefined') + (loaded ? ' ✔' : ' (not loaded)'));
         });

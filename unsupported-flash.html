@@ -89,7 +89,7 @@
     <h1>Flash Test</h1>
 
     <!-- automation anchor: otomasyon "this plugin is not" string'ini sayfa text'inde arar -->
-    <p id="plugin-warning">this plugin is not supported</p>
+    <p id="plugin-warning"></p>
 
     <div class="card">
         <h2>Flash Detection</h2>
@@ -155,6 +155,10 @@
             const ax        = detectFlashAX();
             const supported = plugin || ax;
             const version   = getFlashVersion();
+
+            document.getElementById('plugin-warning').textContent = supported
+                ? 'Flash plugin is active'
+                : 'this plugin is not supported';
 
             set('r-flash',  supported, 'Flash Player Found',          'Flash Plug-In not found');
             set('r-plugin', plugin,    'Found in navigator.plugins',  'Not in navigator.plugins');

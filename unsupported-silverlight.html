@@ -102,7 +102,7 @@
     <!-- automation anchor: otomasyon ilk <img> alt="Get Microsoft Silverlight" kontrol eder -->
     <div id="automation-anchor">
         <object type="application/x-silverlight" data="data:," width="1" height="1">
-            <img alt="Get Microsoft Silverlight" src="about:blank">
+            <img id="silverlight-img" alt="" src="about:blank">
         </object>
     </div>
 
@@ -130,6 +130,10 @@
             const plugin    = detectSilverlightPlugin();
             const ax        = detectSilverlightAX();
             const supported = plugin || ax;
+            document.getElementById('silverlight-img').alt = supported
+                ? 'Silverlight Active'
+                : 'Get Microsoft Silverlight';
+
             set('r-silverlight', supported, 'Found',                    'Silverlight Plug-In not found');
             set('r-ctp',         false,     'Click-To-Play Active',     'Not Applicable');
             set('r-plugin',      plugin,    'Found in navigator.plugins','Not in navigator.plugins');
