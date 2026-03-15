@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Download Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Righteous', cursive;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+            padding: 32px 40px;
+            width: 100%;
+            max-width: 560px;
+        }
+        .card h2 {
+            font-size: 1.05em;
+            letter-spacing: 0.5px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 8px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 12px;
+        }
+        .row:last-child { border-bottom: none; }
+        .row-label {
+            color: #555;
+            font-size: 0.95em;
+            flex: 1;
+        }
+        .row-result {
+            font-size: 0.95em;
+            font-weight: bold;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .ok   { color: #22a06b; }
+        .fail { color: #e53935; }
+        .muted { color: #aaa; }
+        .btn-section {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 2px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+        .action-btn {
+            padding: 11px 32px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .action-btn:hover { background: #f0f0f0; }
+        #ButtonClickInfo {
+            font-size: 1em;
+            color: #22a06b;
+            font-weight: bold;
+            min-height: 1.4em;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 28px;
+            padding: 11px 32px;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            border-radius: 10px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: background 0.2s;
+        }
+        .back-button:hover { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>File Download Test</h1>
+
+    <div class="card">
+        <h2>File Downloading Not Supported</h2>
+        <div class="row">
+            <span class="row-label">Download Attribute Support</span>
+            <span id="r-download" class="row-result muted">Checking…</span>
+        </div>
+        <div class="row">
+            <span class="row-label">Download Triggered</span>
+            <span id="r-triggered" class="row-result muted">Not triggered</span>
+        </div>
+        <div class="btn-section">
+            <button name="filedownload" class="action-btn" onclick="downloadFile()">Download File</button>
+            <button name="vitalcheck" class="action-btn" onclick="vitalCheck()">Vital Check</button>
+            <p id="ButtonClickInfo"></p>
+        </div>
+    </div>
+
+    <a href="unsupported-features.html" class="back-button">← Back</a>
+
+    <script>
+        function downloadFile() {
+            document.getElementById('ButtonClickInfo').textContent = 'file download';
+            const el = document.getElementById('r-triggered');
+            el.textContent = '✔ Triggered';
+            el.className = 'row-result ok';
+
+            const a = document.createElement('a');
+            a.href = 'data:text/plain;charset=utf-8,uitest-download-test';
+            a.download = 'uitest-download.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function vitalCheck() {
+            document.getElementById('ButtonClickInfo').textContent = 'Still alive';
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const el = document.getElementById('r-download');
+            const a = document.createElement('a');
+            const supported = typeof a.download !== 'undefined';
+            el.textContent = supported ? '✔ Supported' : '✖ Not Supported';
+            el.className = 'row-result ' + (supported ? 'ok' : 'fail');
+        });
+    </script>
+</body>
+</html>
