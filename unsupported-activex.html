@@ -4,109 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ActiveX Test</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Righteous', cursive;
-            margin: 0;
-            padding: 20px;
             background: #f5f7fa;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            box-sizing: border-box;
+            padding: 40px 20px;
         }
-        h1 { text-align: center; margin-bottom: 30px; }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 28px;
+            text-align: center;
+        }
         .card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            padding: 40px 50px;
-            min-width: 420px;
-            max-width: 600px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+            padding: 32px 40px;
             width: 100%;
+            max-width: 560px;
         }
         .card h2 {
-            font-size: 1.1em;
-            margin: 0 0 20px 0;
+            font-size: 1.05em;
+            letter-spacing: 0.5px;
+            padding-bottom: 14px;
             border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 12px;
-            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
-        table { width: 100%; border-collapse: collapse; }
-        td {
-            padding: 11px 8px;
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 0;
             border-bottom: 1px solid #f0f0f0;
-            font-size: 0.95em;
+            gap: 12px;
         }
-        td:first-child { color: #555; width: 55%; }
-        td:last-child { font-weight: bold; text-align: right; white-space: nowrap; }
-        .status-ok   { color: #22a06b; }
-        .status-fail { color: #e53935; }
-        .status-unknown { color: #999; }
-        .icon { font-size: 1.1em; margin-right: 4px; }
+        .row:last-child { border-bottom: none; }
+        .row-label {
+            color: #555;
+            font-size: 0.95em;
+            flex: 1;
+        }
+        .row-result {
+            font-size: 0.95em;
+            font-weight: bold;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .ok   { color: #22a06b; }
+        .fail { color: #e53935; }
+        .muted { color: #aaa; }
+        .btn-section {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 2px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .check-btn {
+            padding: 10px 28px;
+            font-family: 'Righteous', cursive;
+            font-size: 1em;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        .check-btn:hover { background: #f8f9fa; }
+        #ButtonClickInfo { font-size: 1em; color: #22a06b; min-height: 1.4em; }
         .back-button {
             display: inline-block;
-            padding: 10px 25px;
-            margin-top: 30px;
+            margin-top: 28px;
+            padding: 11px 32px;
             background: white;
             color: #000;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: 'Righteous', cursive;
             font-size: 1em;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: background-color 0.3s ease;
-            border: none;
-            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: background 0.2s;
         }
-        .back-button:hover { background: #f8f9fa; }
-        /* Automation element — hidden visually but present in DOM */
+        .back-button:hover { background: #f0f0f0; }
+        #automation-anchor { position: absolute; width: 1px; height: 1px; overflow: hidden; }
     </style>
 </head>
 <body>
     <h1>ActiveX Test</h1>
+
     <div class="card">
         <h2>ActiveX Detection</h2>
-        <table>
-            <tr>
-                <td>ActiveX</td>
-                <td id="result-activex" class="status-unknown">Checking...</td>
-            </tr>
-            <tr>
-                <td>ActiveXObject Available</td>
-                <td id="result-axobject" class="status-unknown">Checking...</td>
-            </tr>
-        </table>
+        <div class="row">
+            <span class="row-label">ActiveX</span>
+            <span id="r-activex" class="row-result muted">Checking…</span>
+        </div>
+        <div class="row">
+            <span class="row-label">ActiveXObject Available</span>
+            <span id="r-axobject" class="row-result muted">Checking…</span>
+        </div>
+        <div class="btn-section">
+            <button name="activexcheck" class="check-btn" onclick="document.getElementById('ButtonClickInfo').textContent='Still alive'">ActiveX Check</button>
+            <p id="ButtonClickInfo"></p>
+        </div>
     </div>
 
-    <!-- Automation anchor: otomasyon bu <b> elementinin text'ini kontrol eder -->
-    <object id="automation-anchor" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1" height="1">
-        <b>WARNING: ActiveX component could not be accessed!</b>
-    </object>
+    <a href="unsupported-features.html" class="back-button">← Back</a>
 
-    <!-- ButtonClickInfo: VitalCheck ile aynı pattern, Ruby bu elementi kontrol eder -->
-    <div style="text-align:center; margin-top: 16px;">
-        <button name="activexcheck" onclick="document.getElementById('ButtonClickInfo').textContent = 'Still alive'" style="padding:10px 28px; font-family:'Righteous',cursive; font-size:1em; background:white; border:2px solid #e0e0e0; border-radius:8px; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.05);">ActiveX Check</button>
-        <p id="ButtonClickInfo"></p>
+    <!-- automation anchor: otomasyon <b> text'ini kontrol eder -->
+    <div id="automation-anchor">
+        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1" height="1">
+            <b>WARNING: ActiveX component could not be accessed!</b>
+        </object>
     </div>
-
-    <a href="unsupported-features.html" class="back-button">Back</a>
 
     <script>
-        function setResult(id, supported, trueLabel, falseLabel) {
+        function set(id, ok, okLabel, failLabel) {
             const el = document.getElementById(id);
-            if (supported) {
-                el.innerHTML = '<span class="icon">✔</span>' + trueLabel;
-                el.className = 'status-ok';
-            } else {
-                el.innerHTML = '<span class="icon">✖</span>' + falseLabel;
-                el.className = 'status-fail';
-            }
+            el.textContent = (ok ? '✔ ' : '✖ ') + (ok ? okLabel : failLabel);
+            el.className = 'row-result ' + (ok ? 'ok' : 'fail');
         }
 
         function detectActiveX() {
@@ -120,12 +145,9 @@
             return false;
         }
 
-        window.addEventListener('DOMContentLoaded', function() {
-            const axSupport = detectActiveX();
-            const axObject  = detectActiveXObject();
-
-            setResult('result-activex',  axSupport, 'ActiveX Supported',       'ActiveX Not Supported');
-            setResult('result-axobject', axObject,  'ActiveXObject Available',  'ActiveXObject Not Available');
+        window.addEventListener('DOMContentLoaded', function () {
+            set('r-activex',  detectActiveX(),       'ActiveX Supported',        'ActiveX Not Supported');
+            set('r-axobject', detectActiveXObject(),  'ActiveXObject Available',  'ActiveXObject Not Available');
         });
     </script>
 </body>

@@ -4,114 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Java Applet Test</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Righteous', cursive;
-            margin: 0;
-            padding: 20px;
             background: #f5f7fa;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            box-sizing: border-box;
+            padding: 40px 20px;
         }
-        h1 { text-align: center; margin-bottom: 30px; }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 28px;
+            text-align: center;
+        }
         .card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            padding: 40px 50px;
-            min-width: 420px;
-            max-width: 600px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+            padding: 32px 40px;
             width: 100%;
+            max-width: 560px;
         }
         .card h2 {
-            font-size: 1.1em;
-            margin: 0 0 20px 0;
+            font-size: 1.05em;
+            letter-spacing: 0.5px;
+            padding-bottom: 14px;
             border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 12px;
-            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
-        table { width: 100%; border-collapse: collapse; }
-        td {
-            padding: 11px 8px;
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 0;
             border-bottom: 1px solid #f0f0f0;
-            font-size: 0.95em;
+            gap: 12px;
         }
-        td:first-child { color: #555; width: 55%; }
-        td:last-child { font-weight: bold; text-align: right; white-space: nowrap; }
-        .status-ok      { color: #22a06b; }
-        .status-fail    { color: #e53935; }
-        .status-unknown { color: #999; }
-        .icon { font-size: 1.1em; margin-right: 4px; }
+        .row:last-child { border-bottom: none; }
+        .row-label {
+            color: #555;
+            font-size: 0.95em;
+            flex: 1;
+        }
+        .row-result {
+            font-size: 0.95em;
+            font-weight: bold;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .ok   { color: #22a06b; }
+        .fail { color: #e53935; }
+        .muted { color: #aaa; }
         .back-button {
             display: inline-block;
-            padding: 10px 25px;
-            margin-top: 30px;
+            margin-top: 28px;
+            padding: 11px 32px;
             background: white;
             color: #000;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: 'Righteous', cursive;
             font-size: 1em;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: background-color 0.3s ease;
-            border: none;
-            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: background 0.2s;
         }
-        .back-button:hover { background: #f8f9fa; }
+        .back-button:hover { background: #f0f0f0; }
+        #automation-anchor { position: absolute; width: 1px; height: 1px; overflow: hidden; }
     </style>
 </head>
 <body>
     <h1>Java Applet Test</h1>
+
     <div class="card">
         <h2>Java Detection</h2>
-        <table>
-            <tr>
-                <td>Java Applet</td>
-                <td id="result-java" class="status-unknown">Checking...</td>
-            </tr>
-            <tr>
-                <td>navigator.javaEnabled()</td>
-                <td id="result-javaenabled" class="status-unknown">Checking...</td>
-            </tr>
-            <tr>
-                <td>Java Plugin in navigator.plugins</td>
-                <td id="result-javaplugin" class="status-unknown">Checking...</td>
-            </tr>
-            <tr>
-                <td>Applet naturalWidth</td>
-                <td id="result-applet" class="status-unknown">Checking...</td>
-            </tr>
-        </table>
+        <div class="row">
+            <span class="row-label">Java Applet</span>
+            <span id="r-java" class="row-result muted">Checking…</span>
+        </div>
+        <div class="row">
+            <span class="row-label">navigator.javaEnabled()</span>
+            <span id="r-enabled" class="row-result muted">Checking…</span>
+        </div>
+        <div class="row">
+            <span class="row-label">Plugin in navigator.plugins</span>
+            <span id="r-plugin" class="row-result muted">Checking…</span>
+        </div>
+        <div class="row">
+            <span class="row-label">Applet naturalWidth</span>
+            <span id="r-applet" class="row-result muted">Checking…</span>
+        </div>
     </div>
 
-    <!-- Automation anchor: otomasyon bu applet'in naturalWidth/naturalHeight'ini kontrol eder -->
-    <applet id="automation-anchor" code="TestApplet" width="1" height="1"></applet>
+    <a href="unsupported-features.html" class="back-button">← Back</a>
 
-    <a href="unsupported-features.html" class="back-button">Back</a>
+    <!-- automation anchor: otomasyon applet naturalWidth/naturalHeight kontrol eder -->
+    <div id="automation-anchor">
+        <applet id="test-applet" code="TestApplet" width="1" height="1"></applet>
+    </div>
 
     <script>
-        function setResult(id, supported, trueLabel, falseLabel) {
+        function set(id, ok, okLabel, failLabel) {
             const el = document.getElementById(id);
-            if (supported) {
-                el.innerHTML = '<span class="icon">✔</span>' + trueLabel;
-                el.className = 'status-ok';
-            } else {
-                el.innerHTML = '<span class="icon">✖</span>' + falseLabel;
-                el.className = 'status-fail';
-            }
+            el.textContent = (ok ? '✔ ' : '✖ ') + (ok ? okLabel : failLabel);
+            el.className = 'row-result ' + (ok ? 'ok' : 'fail');
         }
 
-        function setNeutral(id, label) {
+        function setMuted(id, text) {
             const el = document.getElementById(id);
-            el.innerHTML = label;
-            el.className = 'status-unknown';
+            el.textContent = text;
+            el.className = 'row-result muted';
         }
 
         function detectJavaEnabled() {
@@ -119,30 +125,26 @@
         }
 
         function detectJavaPlugin() {
-            if (navigator.plugins) {
-                for (let i = 0; i < navigator.plugins.length; i++) {
-                    const n = navigator.plugins[i].name;
-                    if (n.indexOf('Java') !== -1 || n.indexOf('java') !== -1) return true;
-                }
+            if (!navigator.plugins) return false;
+            for (let i = 0; i < navigator.plugins.length; i++) {
+                const n = navigator.plugins[i].name;
+                if (n.indexOf('Java') !== -1 || n.indexOf('java') !== -1) return true;
             }
             return false;
         }
 
-        window.addEventListener('DOMContentLoaded', function() {
-            const javaEnabled = detectJavaEnabled();
-            const javaPlugin  = detectJavaPlugin();
-            const supported   = javaEnabled || javaPlugin;
+        window.addEventListener('DOMContentLoaded', function () {
+            const enabled = detectJavaEnabled();
+            const plugin  = detectJavaPlugin();
+            const applet  = document.getElementById('test-applet');
+            const nw = applet ? applet.naturalWidth  : undefined;
+            const nh = applet ? applet.naturalHeight : undefined;
 
-            const applet = document.getElementById('automation-anchor');
-            const nw = applet ? applet.naturalWidth : 0;
-            const nh = applet ? applet.naturalHeight : 0;
-            const appletLoaded = nw > 0 || nh > 0;
-
-            setResult('result-java',        supported,    'Java Plugin Found',          'Java Plug-In not found');
-            setResult('result-javaenabled', javaEnabled,  'Enabled',                    'Disabled / Not Available');
-            setResult('result-javaplugin',  javaPlugin,   'Found in navigator.plugins', 'Not in navigator.plugins');
-            setNeutral('result-applet', 'naturalWidth: ' + nw + ', naturalHeight: ' + nh
-                + (appletLoaded ? ' ✔' : ' (not loaded)'));
+            set('r-java',    enabled || plugin, 'Java Plugin Found',           'Java Plug-In not found');
+            set('r-enabled', enabled,           'Enabled',                     'Disabled / Not Available');
+            set('r-plugin',  plugin,            'Found in navigator.plugins',  'Not in navigator.plugins');
+            const loaded = nw > 0 || nh > 0;
+            setMuted('r-applet', 'naturalWidth: ' + (nw ?? 'undefined') + ', naturalHeight: ' + (nh ?? 'undefined') + (loaded ? ' ✔' : ' (not loaded)'));
         });
     </script>
 </body>
