@@ -92,16 +92,16 @@
         <h1>Longest URL Test Page</h1>
         <p class="subtitle">Browser-addressBar-004 &mdash; You are now on a very long URL</p>
 
-        <div class="url-box" id="urlBox"></div>
+        <div class="url-box" id="urlBox" data-testid="long-url-box" data-value=""></div>
 
         <div class="info-grid">
             <div class="info-item">
                 <div class="label">TOTAL URL LENGTH</div>
-                <div class="value" id="urlLen">--</div>
+                <div class="value" id="urlLen" data-testid="long-url-length" data-value="">--</div>
             </div>
             <div class="info-item">
                 <div class="label">FILENAME LENGTH</div>
-                <div class="value" id="fileLen">--</div>
+                <div class="value" id="fileLen" data-testid="long-url-filename-length" data-value="">--</div>
             </div>
         </div>
 
@@ -116,9 +116,15 @@
     <script>
         const url = window.location.href;
         const filename = window.location.pathname.split('/').pop();
-        document.getElementById('urlBox').textContent = url;
-        document.getElementById('urlLen').textContent = url.length + ' chars';
-        document.getElementById('fileLen').textContent = filename.length + ' chars';
+        const urlBox = document.getElementById('urlBox');
+        const urlLen = document.getElementById('urlLen');
+        const fileLen = document.getElementById('fileLen');
+        urlBox.textContent = url;
+        urlBox.setAttribute('data-value', url);
+        urlLen.textContent = url.length + ' chars';
+        urlLen.setAttribute('data-value', String(url.length));
+        fileLen.textContent = filename.length + ' chars';
+        fileLen.setAttribute('data-value', String(filename.length));
     </script>
 </body>
 </html>

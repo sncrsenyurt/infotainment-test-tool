@@ -268,10 +268,15 @@
                 const val = btn.value.toFixed(2);
                 const label = buttonLabels[i] || 'B' + i;
                 buttonsHtml += `
-                    <div class="button-box ${pressed}">
+                    <div class="button-box ${pressed}"
+                         data-testid="gp-${gp.index}-button-${i}"
+                         data-index="${i}"
+                         data-pressed="${btn.pressed}"
+                         data-value="${val}"
+                         aria-pressed="${btn.pressed}">
                         <span class="idx">#${i}</span><br>
                         ${label}
-                        <span class="pressure">${val}</span>
+                        <span class="pressure" data-testid="gp-${gp.index}-button-${i}-value">${val}</span>
                     </div>`;
             });
 
@@ -280,12 +285,14 @@
                 const pct = Math.abs(axis) * 50;
                 const left = axis < 0 ? (50 - pct) : 50;
                 axesHtml += `
-                    <div class="axis-row">
+                    <div class="axis-row" data-testid="gp-${gp.index}-axis-${i}-row">
                         <span class="axis-label">Axis ${i}</span>
                         <div class="axis-bar">
                             <div class="axis-fill" style="left:${left}%;width:${pct}%"></div>
                         </div>
-                        <span class="axis-value">${axis.toFixed(3)}</span>
+                        <span class="axis-value"
+                              data-testid="gp-${gp.index}-axis-${i}"
+                              data-value="${axis.toFixed(3)}">${axis.toFixed(3)}</span>
                     </div>`;
             });
 
@@ -295,26 +302,31 @@
             const ry = gp.axes[3] || 0;
 
             return `
-                <div class="gamepad-card">
-                    <h2>#${gp.index} &mdash; ${gp.id}</h2>
+                <div class="gamepad-card"
+                     data-testid="gamepad-card-${gp.index}"
+                     data-index="${gp.index}"
+                     data-id="${gp.id}"
+                     data-button-count="${gp.buttons.length}"
+                     data-axis-count="${gp.axes.length}">
+                    <h2>#${gp.index} &mdash; <span data-testid="gp-${gp.index}-id">${gp.id}</span></h2>
                     <div class="grid-2">
                         <div>
                             <div class="section-title">BUTTONS (${gp.buttons.length})</div>
-                            <div class="buttons-grid">${buttonsHtml}</div>
+                            <div class="buttons-grid" data-testid="gp-${gp.index}-buttons">${buttonsHtml}</div>
                         </div>
                         <div>
                             <div class="section-title">AXES (${gp.axes.length})</div>
-                            ${axesHtml}
+                            <div data-testid="gp-${gp.index}-axes">${axesHtml}</div>
                             <div class="grid-2" style="margin-top:15px">
                                 <div>
                                     <div class="section-title" style="text-align:center">Left Stick</div>
-                                    <div class="stick-visual">
+                                    <div class="stick-visual" data-testid="gp-${gp.index}-left-stick" data-x="${lx.toFixed(3)}" data-y="${ly.toFixed(3)}">
                                         <div class="stick-dot" style="transform:translate(calc(-50% + ${lx*60}px), calc(-50% + ${ly*60}px))"></div>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="section-title" style="text-align:center">Right Stick</div>
-                                    <div class="stick-visual">
+                                    <div class="stick-visual" data-testid="gp-${gp.index}-right-stick" data-x="${rx.toFixed(3)}" data-y="${ry.toFixed(3)}">
                                         <div class="stick-dot" style="transform:translate(calc(-50% + ${rx*60}px), calc(-50% + ${ry*60}px))"></div>
                                     </div>
                                 </div>

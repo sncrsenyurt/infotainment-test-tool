@@ -216,49 +216,55 @@
     </div>
 
     <div class="layout">
-        <div id="map"></div>
+        <div id="map" data-testid="gps-map"></div>
 
-        <div class="panel">
+        <div class="panel" data-testid="gps-panel">
             <h2>Live Data</h2>
 
-            <div id="status" class="status idle">Waiting to start...</div>
+            <div id="status" class="status idle"
+                 data-testid="gps-status"
+                 data-state="idle"
+                 role="status"
+                 aria-live="polite">Waiting to start...</div>
 
             <div class="stat">
                 <span class="label">Latitude</span>
-                <span class="value" id="lat">--</span>
+                <span class="value" id="lat" data-testid="gps-latitude" data-value="">--</span>
             </div>
             <div class="stat">
                 <span class="label">Longitude</span>
-                <span class="value" id="lng">--</span>
+                <span class="value" id="lng" data-testid="gps-longitude" data-value="">--</span>
             </div>
             <div class="stat">
                 <span class="label">Speed</span>
-                <span class="value" id="speed">-- km/h</span>
+                <span class="value" id="speed" data-testid="gps-speed" data-value="" data-unit="km/h">-- km/h</span>
             </div>
             <div class="stat">
                 <span class="label">Heading</span>
-                <span class="value" id="heading">-- &deg;</span>
+                <span class="value" id="heading" data-testid="gps-heading" data-value="" data-unit="deg">-- &deg;</span>
             </div>
             <div class="stat">
                 <span class="label">Accuracy</span>
-                <span class="value" id="accuracy">-- m</span>
+                <span class="value" id="accuracy" data-testid="gps-accuracy" data-value="" data-unit="m">-- m</span>
             </div>
             <div class="stat">
                 <span class="label">Altitude</span>
-                <span class="value" id="altitude">-- m</span>
+                <span class="value" id="altitude" data-testid="gps-altitude" data-value="" data-unit="m">-- m</span>
             </div>
             <div class="stat">
                 <span class="label">Updates</span>
-                <span class="value" id="updates">0</span>
+                <span class="value" id="updates" data-testid="gps-updates" data-value="0">0</span>
             </div>
 
-            <div class="controls">
-                <button id="startBtn">Start Tracking</button>
-                <button id="stopBtn" class="secondary">Stop</button>
+            <div class="controls" data-testid="gps-controls-primary">
+                <button id="startBtn" data-testid="gps-start" aria-label="Start GPS tracking">Start Tracking</button>
+                <button id="stopBtn" class="secondary" data-testid="gps-stop" aria-label="Stop GPS tracking">Stop</button>
             </div>
-            <div class="controls">
-                <button id="centerBtn" class="secondary">Center on Me</button>
-                <button id="compassBtn" class="secondary">Enable Compass</button>
+            <div class="controls" data-testid="gps-controls-secondary">
+                <button id="centerBtn" class="secondary" data-testid="gps-center" aria-label="Center map on current location">Center on Me</button>
+                <button id="compassBtn" class="secondary" data-testid="gps-compass"
+                        data-state="off" aria-pressed="false"
+                        aria-label="Enable device compass">Enable Compass</button>
             </div>
 
             <div class="legend">
@@ -323,6 +329,16 @@
         function setStatus(text, kind) {
             els.status.textContent = text;
             els.status.className = 'status ' + kind;
+            els.status.setAttribute('data-state', kind);
+        }
+
+        function setValue(el, displayText, rawValue) {
+            el.textContent = displayText;
+            if (rawValue !== undefined && rawValue !== null) {
+                el.setAttribute('data-value', String(rawValue));
+            } else {
+                el.setAttribute('data-value', '');
+            }
         }
 
         function rotateMarker(angleDeg) {
@@ -349,14 +365,13 @@
             const latlng = L.latLng(latitude, longitude);
             updateCount++;
 
-            els.lat.textContent = latitude.toFixed(6);
-            els.lng.textContent = longitude.toFixed(6);
-            els.accuracy.textContent = accuracy ? accuracy.toFixed(1) + ' m' : '-- m';
-            els.altitude.textContent = (altitude != null) ? altitude.toFixed(1) + ' m' : '-- m';
-            els.speed.textContent = (speed != null && !isNaN(speed))
-                ? (speed * 3.6).toFixed(1) + ' km/h'
-                : '0.0 km/h';
-            els.updates.textContent = updateCount;
+            setValue(els.lat, latitude.toFixed(6), latitude);
+            setValue(els.lng, longitude.toFixed(6), longitude);
+            setValue(els.accuracy, accuracy ? accuracy.toFixed(1) + ' m' : '-- m', accuracy);
+            setValue(els.altitude, (altitude != null) ? altitude.toFixed(1) + ' m' : '-- m', altitude);
+            const speedKmh = (speed != null && !isNaN(speed)) ? speed * 3.6 : 0;
+            setValue(els.speed, speedKmh.toFixed(1) + ' km/h', speedKmh);
+            setValue(els.updates, String(updateCount), updateCount);
 
             let dir = null;
             if (heading != null && !isNaN(heading)) {
@@ -368,7 +383,7 @@
             }
 
             if (dir != null) {
-                els.heading.textContent = dir.toFixed(0) + ' \u00B0';
+                setValue(els.heading, dir.toFixed(0) + ' \u00B0', dir);
             }
 
             if (!marker) {
@@ -464,6 +479,10 @@
                 window.addEventListener('deviceorientationabsolute', handleOrientation, true);
                 window.addEventListener('deviceorientation', handleOrientation, true);
                 compassEnabled = true;
+                const cb = document.getElementById('compassBtn');
+                cb.setAttribute('data-state', 'on');
+                cb.setAttribute('aria-pressed', 'true');
+                cb.textContent = 'Compass: ON';
                 setStatus('Compass enabled.', 'tracking');
             } catch (e) {
                 setStatus('Compass not available: ' + e.message, 'error');
