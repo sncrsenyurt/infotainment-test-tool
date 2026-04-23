@@ -137,20 +137,20 @@
 
     <canvas id="webgl-canvas"></canvas>
 
-    <div class="hud">
+    <div class="hud" data-testid="webgl-hud">
         <h2>Render Info</h2>
-        <div class="metric"><span>FPS</span><span class="value" id="fps">--</span></div>
-        <div class="metric"><span>Triangles</span><span class="value" id="tris">--</span></div>
-        <div class="metric"><span>Draw calls</span><span class="value" id="calls">--</span></div>
-        <div class="metric"><span>Renderer</span><span class="value" id="renderer">--</span></div>
-        <div class="metric"><span>Vendor</span><span class="value" id="vendor">--</span></div>
-        <div class="metric"><span>WebGL</span><span class="value" id="version">--</span></div>
+        <div class="metric"><span>FPS</span><span class="value" id="fps" data-testid="webgl-fps">--</span></div>
+        <div class="metric"><span>Triangles</span><span class="value" id="tris" data-testid="webgl-triangles">--</span></div>
+        <div class="metric"><span>Draw calls</span><span class="value" id="calls" data-testid="webgl-drawcalls">--</span></div>
+        <div class="metric"><span>Renderer</span><span class="value" id="renderer" data-testid="webgl-renderer">--</span></div>
+        <div class="metric"><span>Vendor</span><span class="value" id="vendor" data-testid="webgl-vendor">--</span></div>
+        <div class="metric"><span>WebGL</span><span class="value" id="version" data-testid="webgl-version">--</span></div>
     </div>
 
-    <div class="controls">
-        <button id="addBtn">+ Add 50 Cubes</button>
-        <button id="subBtn" class="secondary">- Remove 50</button>
-        <button id="resetBtn" class="secondary">Reset</button>
+    <div class="controls" data-testid="webgl-controls">
+        <button id="addBtn" data-testid="add-cubes" aria-label="Add 50 cubes">+ Add 50 Cubes</button>
+        <button id="subBtn" class="secondary" data-testid="remove-cubes" aria-label="Remove 50 cubes">- Remove 50</button>
+        <button id="resetBtn" class="secondary" data-testid="reset-scene" aria-label="Reset scene">Reset</button>
     </div>
 
     <a href="webgl.html" class="back-button">Back</a>

@@ -184,25 +184,31 @@
 
     <canvas class="main-canvas" id="mainCanvas"></canvas>
 
-    <div class="hud">
+    <div class="hud" data-testid="fps-hud">
         <h2>FPS Meter</h2>
-        <div class="fps-big" id="fpsBig">--</div>
+        <div class="fps-big" id="fpsBig" data-testid="fps-current">--</div>
         <div class="fps-label">FRAMES / SECOND</div>
         <div style="height:12px"></div>
-        <div class="metric"><span class="label">Avg (1s)</span><span class="value" id="avgFps">--</span></div>
-        <div class="metric"><span class="label">Min</span><span class="value" id="minFps">--</span></div>
-        <div class="metric"><span class="label">Max</span><span class="value" id="maxFps">--</span></div>
-        <div class="metric"><span class="label">Frame time</span><span class="value" id="frameTime">-- ms</span></div>
-        <div class="metric"><span class="label">Total frames</span><span class="value" id="totalFrames">0</span></div>
-        <div class="metric"><span class="label">Dropped</span><span class="value" id="dropped">0</span></div>
-        <div class="metric"><span class="label">Refresh rate</span><span class="value" id="refresh">-- Hz</span></div>
+        <div class="metric"><span class="label">Avg (1s)</span><span class="value" id="avgFps" data-testid="fps-avg">--</span></div>
+        <div class="metric"><span class="label">Min</span><span class="value" id="minFps" data-testid="fps-min">--</span></div>
+        <div class="metric"><span class="label">Max</span><span class="value" id="maxFps" data-testid="fps-max">--</span></div>
+        <div class="metric"><span class="label">Frame time</span><span class="value" id="frameTime" data-testid="fps-frametime">-- ms</span></div>
+        <div class="metric"><span class="label">Total frames</span><span class="value" id="totalFrames" data-testid="fps-totalframes">0</span></div>
+        <div class="metric"><span class="label">Dropped</span><span class="value" id="dropped" data-testid="fps-dropped">0</span></div>
+        <div class="metric"><span class="label">Refresh rate</span><span class="value" id="refresh" data-testid="fps-refresh">-- Hz</span></div>
     </div>
 
-    <div class="controls">
-        <button id="resetBtn">Reset</button>
-        <button id="stressBtn" class="secondary">Toggle Stress Test</button>
-        <label>Shapes: <span id="shapeCount">50</span></label>
-        <input type="range" id="shapeSlider" min="1" max="500" value="50">
+    <div class="controls" data-testid="controls-panel">
+        <button id="resetBtn" data-testid="reset-button" aria-label="Reset FPS counters">Reset</button>
+        <button id="stressBtn" class="secondary"
+                data-testid="stress-toggle"
+                data-state="off"
+                aria-pressed="false"
+                aria-label="Toggle stress test mode">Toggle Stress Test</button>
+        <label for="shapeSlider">Shapes: <span id="shapeCount" data-testid="shape-count">50</span></label>
+        <input type="range" id="shapeSlider" data-testid="shape-slider"
+               name="shapeSlider" min="1" max="500" value="50"
+               aria-label="Number of shapes to render">
     </div>
 
     <canvas id="fpsChart" width="400" height="80"></canvas>
@@ -352,8 +358,13 @@
             maxFps = 0;
         };
 
-        document.getElementById('stressBtn').onclick = () => {
+        document.getElementById('stressBtn').onclick = (e) => {
             stressMode = !stressMode;
+            const btn = e.currentTarget;
+            btn.setAttribute('data-state', stressMode ? 'on' : 'off');
+            btn.setAttribute('aria-pressed', stressMode ? 'true' : 'false');
+            btn.textContent = stressMode ? 'Stress Test: ON' : 'Toggle Stress Test';
+            btn.style.background = stressMode ? '#e74c3c' : '';
         };
 
         document.getElementById('shapeSlider').oninput = (e) => {
