@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPS / VSync Tester (Internal)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 0;
+            background: #0a0e27;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 15px 0 8px;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 1.6em;
+            letter-spacing: 2px;
+            color: #4cd2ff;
+        }
+
+        .page-header p {
+            margin: 4px 0 0;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+
+        .main-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .hud {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            z-index: 5;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 20px 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(76, 210, 255, 0.3);
+            min-width: 260px;
+        }
+
+        .hud h2 {
+            margin: 0 0 15px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+            color: #4cd2ff;
+            text-transform: uppercase;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9em;
+        }
+
+        .metric:last-child { border-bottom: none; }
+
+        .metric .label { opacity: 0.7; }
+
+        .metric .value {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #4cd2ff;
+        }
+
+        .fps-big {
+            text-align: center;
+            font-size: 4em;
+            font-weight: bold;
+            color: #4cd2ff;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 20px rgba(76,210,255,0.6);
+            margin: 10px 0;
+        }
+
+        .fps-label {
+            text-align: center;
+            font-size: 0.85em;
+            opacity: 0.6;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 5;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(76, 210, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 180px;
+        }
+
+        .controls button {
+            padding: 10px 15px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            font-size: 0.85em;
+            transition: all 0.2s ease;
+        }
+
+        .controls button:hover { background: #1557b0; transform: translateY(-2px); }
+        .controls button.secondary { background: rgba(255,255,255,0.1); }
+        .controls button.secondary:hover { background: rgba(255,255,255,0.2); }
+
+        .controls label {
+            font-size: 0.8em;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+
+        .controls input[type="range"] { width: 100%; accent-color: #4cd2ff; }
+
+        #fpsChart {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(76, 210, 255, 0.3);
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .back-button:hover { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>FPS / VSync Tester</h1>
+        <p>Browser-System-014 &mdash; Real-time frame rate measurement</p>
+    </div>
+
+    <canvas class="main-canvas" id="mainCanvas"></canvas>
+
+    <div class="hud">
+        <h2>FPS Meter</h2>
+        <div class="fps-big" id="fpsBig">--</div>
+        <div class="fps-label">FRAMES / SECOND</div>
+        <div style="height:12px"></div>
+        <div class="metric"><span class="label">Avg (1s)</span><span class="value" id="avgFps">--</span></div>
+        <div class="metric"><span class="label">Min</span><span class="value" id="minFps">--</span></div>
+        <div class="metric"><span class="label">Max</span><span class="value" id="maxFps">--</span></div>
+        <div class="metric"><span class="label">Frame time</span><span class="value" id="frameTime">-- ms</span></div>
+        <div class="metric"><span class="label">Total frames</span><span class="value" id="totalFrames">0</span></div>
+        <div class="metric"><span class="label">Dropped</span><span class="value" id="dropped">0</span></div>
+        <div class="metric"><span class="label">Refresh rate</span><span class="value" id="refresh">-- Hz</span></div>
+    </div>
+
+    <div class="controls">
+        <button id="resetBtn">Reset</button>
+        <button id="stressBtn" class="secondary">Toggle Stress Test</button>
+        <label>Shapes: <span id="shapeCount">50</span></label>
+        <input type="range" id="shapeSlider" min="1" max="500" value="50">
+    </div>
+
+    <canvas id="fpsChart" width="400" height="80"></canvas>
+
+    <a href="fps.html" class="back-button">Back</a>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const chart = document.getElementById('fpsChart');
+        const chartCtx = chart.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        let shapes = [];
+        let shapeCount = 50;
+        let stressMode = false;
+
+        function makeShapes(n) {
+            shapes = [];
+            for (let i = 0; i < n; i++) {
+                shapes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    r: 20 + Math.random() * 40,
+                    hue: Math.random() * 360
+                });
+            }
+        }
+        makeShapes(shapeCount);
+
+        let lastTime = performance.now();
+        let frames = 0;
+        let fpsHistory = [];
+        let frameTimeHistory = [];
+        let totalFrames = 0;
+        let minFps = Infinity, maxFps = 0;
+        let lastFpsTime = lastTime;
+        let dropped = 0;
+        const expectedFrameTime = 16.67;
+
+        function loop(now) {
+            const dt = now - lastTime;
+            lastTime = now;
+            totalFrames++;
+            frames++;
+
+            frameTimeHistory.push(dt);
+            if (frameTimeHistory.length > 120) frameTimeHistory.shift();
+
+            if (dt > expectedFrameTime * 1.5) dropped++;
+
+            if (now - lastFpsTime >= 1000) {
+                const fps = frames * 1000 / (now - lastFpsTime);
+                fpsHistory.push(fps);
+                if (fpsHistory.length > 60) fpsHistory.shift();
+                if (fps < minFps) minFps = fps;
+                if (fps > maxFps) maxFps = fps;
+
+                document.getElementById('fpsBig').textContent = fps.toFixed(1);
+                document.getElementById('avgFps').textContent =
+                    (fpsHistory.reduce((a,b) => a+b, 0) / fpsHistory.length).toFixed(1);
+                document.getElementById('minFps').textContent = minFps.toFixed(1);
+                document.getElementById('maxFps').textContent = maxFps.toFixed(1);
+                document.getElementById('frameTime').textContent = dt.toFixed(2) + ' ms';
+                document.getElementById('totalFrames').textContent = totalFrames;
+                document.getElementById('dropped').textContent = dropped;
+                document.getElementById('refresh').textContent = Math.round(fps) + ' Hz';
+
+                drawChart();
+
+                frames = 0;
+                lastFpsTime = now;
+            }
+
+            ctx.fillStyle = 'rgba(10, 14, 39, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const iterations = stressMode ? 3 : 1;
+            for (let k = 0; k < iterations; k++) {
+                shapes.forEach(s => {
+                    s.x += s.vx;
+                    s.y += s.vy;
+                    if (s.x < 0 || s.x > canvas.width) s.vx *= -1;
+                    if (s.y < 0 || s.y > canvas.height) s.vy *= -1;
+                    s.hue = (s.hue + 0.5) % 360;
+
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${s.hue}, 80%, 60%, 0.7)`;
+                    ctx.fill();
+                    ctx.strokeStyle = `hsla(${s.hue}, 80%, 80%, 0.9)`;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                });
+            }
+
+            requestAnimationFrame(loop);
+        }
+
+        function drawChart() {
+            chartCtx.fillStyle = 'rgba(0,0,0,0)';
+            chartCtx.clearRect(0, 0, chart.width, chart.height);
+            const max = 120;
+            const step = chart.width / 60;
+
+            chartCtx.strokeStyle = 'rgba(76, 210, 255, 0.2)';
+            chartCtx.lineWidth = 1;
+            [30, 60, 90].forEach(v => {
+                const y = chart.height - (v / max) * chart.height;
+                chartCtx.beginPath();
+                chartCtx.moveTo(0, y);
+                chartCtx.lineTo(chart.width, y);
+                chartCtx.stroke();
+            });
+
+            chartCtx.beginPath();
+            chartCtx.strokeStyle = '#4cd2ff';
+            chartCtx.lineWidth = 2;
+            fpsHistory.forEach((v, i) => {
+                const x = i * step;
+                const y = chart.height - Math.min(v, max) / max * chart.height;
+                if (i === 0) chartCtx.moveTo(x, y); else chartCtx.lineTo(x, y);
+            });
+            chartCtx.stroke();
+
+            chartCtx.fillStyle = 'rgba(255,255,255,0.5)';
+            chartCtx.font = '10px monospace';
+            chartCtx.fillText('60', 5, chart.height - 40);
+            chartCtx.fillText('30', 5, chart.height - 20);
+            chartCtx.fillText('120', 5, 12);
+        }
+
+        document.getElementById('resetBtn').onclick = () => {
+            fpsHistory = [];
+            frameTimeHistory = [];
+            totalFrames = 0;
+            dropped = 0;
+            minFps = Infinity;
+            maxFps = 0;
+        };
+
+        document.getElementById('stressBtn').onclick = () => {
+            stressMode = !stressMode;
+        };
+
+        document.getElementById('shapeSlider').oninput = (e) => {
+            shapeCount = parseInt(e.target.value);
+            document.getElementById('shapeCount').textContent = shapeCount;
+            makeShapes(shapeCount);
+        };
+
+        requestAnimationFrame(loop);
+    </script>
+</body>
+</html>

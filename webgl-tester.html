@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL 3D Tester (Internal)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .page-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            text-align: center;
+            padding: 15px 0 10px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            color: #66ff99;
+        }
+
+        .page-header p {
+            margin: 4px 0 0;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .hud {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            z-index: 5;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 18px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(102, 255, 153, 0.3);
+            min-width: 240px;
+            font-size: 0.85em;
+        }
+
+        .hud h2 {
+            margin: 0 0 12px;
+            font-size: 0.95em;
+            letter-spacing: 2px;
+            color: #66ff99;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .metric:last-child { border-bottom: none; }
+        .metric .value { font-family: 'Courier New', monospace; color: #66ff99; word-break: break-all; max-width: 150px; text-align: right; }
+
+        .controls {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 5;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(102, 255, 153, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 160px;
+        }
+
+        .controls button {
+            padding: 8px 12px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            font-size: 0.8em;
+        }
+
+        .controls button:hover { background: #27ae60; }
+        .controls button.secondary { background: rgba(255,255,255,0.1); }
+
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .back-button:hover { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>WebGL 3D Tester</h1>
+        <p>Browser-Multimedia-007 &mdash; GPU render &amp; FPS test</p>
+    </div>
+
+    <canvas id="webgl-canvas"></canvas>
+
+    <div class="hud">
+        <h2>Render Info</h2>
+        <div class="metric"><span>FPS</span><span class="value" id="fps">--</span></div>
+        <div class="metric"><span>Triangles</span><span class="value" id="tris">--</span></div>
+        <div class="metric"><span>Draw calls</span><span class="value" id="calls">--</span></div>
+        <div class="metric"><span>Renderer</span><span class="value" id="renderer">--</span></div>
+        <div class="metric"><span>Vendor</span><span class="value" id="vendor">--</span></div>
+        <div class="metric"><span>WebGL</span><span class="value" id="version">--</span></div>
+    </div>
+
+    <div class="controls">
+        <button id="addBtn">+ Add 50 Cubes</button>
+        <button id="subBtn" class="secondary">- Remove 50</button>
+        <button id="resetBtn" class="secondary">Reset</button>
+    </div>
+
+    <a href="webgl.html" class="back-button">Back</a>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+
+        const canvas = document.getElementById('webgl-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0a0e27, 1);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 5, 25);
+        camera.lookAt(0, 0, 0);
+
+        const light1 = new THREE.DirectionalLight(0xffffff, 1.2);
+        light1.position.set(10, 10, 10);
+        scene.add(light1);
+        scene.add(new THREE.AmbientLight(0x404080, 0.8));
+        scene.add(new THREE.DirectionalLight(0x66ff99, 0.5).translateY(5));
+
+        const cubes = [];
+        const geo = new THREE.BoxGeometry(1, 1, 1);
+
+        function addCubes(n) {
+            for (let i = 0; i < n; i++) {
+                const mat = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(Math.random(), 0.7, 0.55),
+                    shininess: 80
+                });
+                const m = new THREE.Mesh(geo, mat);
+                m.position.set(
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 12,
+                    (Math.random() - 0.5) * 20
+                );
+                m.userData.rotSpeed = {
+                    x: (Math.random() - 0.5) * 0.04,
+                    y: (Math.random() - 0.5) * 0.04
+                };
+                m.userData.orbit = Math.random() * Math.PI * 2;
+                m.userData.orbitRadius = 5 + Math.random() * 10;
+                m.userData.orbitSpeed = (Math.random() - 0.5) * 0.01;
+                scene.add(m);
+                cubes.push(m);
+            }
+        }
+
+        function removeCubes(n) {
+            for (let i = 0; i < n && cubes.length > 0; i++) {
+                const c = cubes.pop();
+                scene.remove(c);
+                c.material.dispose();
+            }
+        }
+
+        addCubes(50);
+
+        const gl = renderer.getContext();
+        const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+        document.getElementById('renderer').textContent =
+            dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : 'n/a';
+        document.getElementById('vendor').textContent =
+            dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) : 'n/a';
+        document.getElementById('version').textContent = gl.getParameter(gl.VERSION);
+
+        let lastTime = performance.now();
+        let lastFpsTime = lastTime;
+        let frames = 0;
+
+        function animate(now) {
+            frames++;
+            if (now - lastFpsTime >= 500) {
+                const fps = frames * 1000 / (now - lastFpsTime);
+                document.getElementById('fps').textContent = fps.toFixed(1);
+                document.getElementById('tris').textContent = (cubes.length * 12).toLocaleString();
+                document.getElementById('calls').textContent = renderer.info.render.calls;
+                frames = 0;
+                lastFpsTime = now;
+            }
+
+            cubes.forEach(c => {
+                c.rotation.x += c.userData.rotSpeed.x;
+                c.rotation.y += c.userData.rotSpeed.y;
+                c.userData.orbit += c.userData.orbitSpeed;
+                c.position.x = Math.cos(c.userData.orbit) * c.userData.orbitRadius;
+                c.position.z = Math.sin(c.userData.orbit) * c.userData.orbitRadius;
+            });
+
+            scene.rotation.y += 0.002;
+            renderer.render(scene, camera);
+            lastTime = now;
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        document.getElementById('addBtn').onclick = () => addCubes(50);
+        document.getElementById('subBtn').onclick = () => removeCubes(50);
+        document.getElementById('resetBtn').onclick = () => {
+            removeCubes(cubes.length);
+            addCubes(50);
+        };
+
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>

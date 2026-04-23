@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamepad Tester (Internal)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: #2c3e50;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 20px 0 10px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 2em;
+            letter-spacing: 2px;
+        }
+
+        .page-header p {
+            margin: 6px 0 0;
+            font-size: 0.95em;
+            opacity: 0.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status-card .label {
+            opacity: 0.6;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        .status-card .value {
+            font-size: 1.5em;
+            color: #1a73e8;
+            margin-top: 8px;
+        }
+
+        .gamepad-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .gamepad-card h2 {
+            margin: 0 0 15px;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 8px;
+        }
+
+        .button-box {
+            padding: 10px 6px;
+            background: #ecf0f3;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85em;
+            transition: all 0.1s ease;
+            border: 2px solid transparent;
+        }
+
+        .button-box.pressed {
+            background: #1a73e8;
+            color: white;
+            border-color: #1557b0;
+            transform: scale(1.05);
+        }
+
+        .button-box .idx {
+            font-size: 0.7em;
+            opacity: 0.6;
+        }
+
+        .button-box .pressure {
+            display: block;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+
+        .axis-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 80px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .axis-label {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .axis-bar {
+            height: 14px;
+            background: #ecf0f3;
+            border-radius: 7px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .axis-fill {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            background: #1a73e8;
+            transition: width 0.05s linear, left 0.05s linear;
+        }
+
+        .axis-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            text-align: right;
+        }
+
+        .stick-visual {
+            width: 140px;
+            height: 140px;
+            background: #ecf0f3;
+            border-radius: 50%;
+            position: relative;
+            margin: 10px auto;
+            border: 2px solid #d4dce4;
+        }
+
+        .stick-dot {
+            width: 24px;
+            height: 24px;
+            background: #1a73e8;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s linear;
+            box-shadow: 0 3px 8px rgba(26,115,232,0.4);
+        }
+
+        .no-gamepad {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.6;
+        }
+
+        .no-gamepad span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 25px;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover { background: #f8f9fa; }
+
+        .footer-bar {
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>Gamepad Tester</h1>
+        <p>Press any button on your controller to connect (Browser-GameController-001)</p>
+    </div>
+
+    <div class="container">
+        <div class="status-card">
+            <div class="label">STATUS</div>
+            <div class="value" id="status">No gamepad connected</div>
+        </div>
+
+        <div id="gamepads"></div>
+    </div>
+
+    <div class="footer-bar">
+        <a href="gamepad.html" class="back-button">Back</a>
+    </div>
+
+    <script>
+        const statusEl = document.getElementById('status');
+        const gamepadsEl = document.getElementById('gamepads');
+
+        window.addEventListener('gamepadconnected', (e) => {
+            statusEl.textContent = 'Connected: ' + e.gamepad.id;
+        });
+
+        window.addEventListener('gamepaddisconnected', (e) => {
+            statusEl.textContent = 'No gamepad connected';
+            gamepadsEl.innerHTML = '';
+        });
+
+        const buttonLabels = [
+            'A / X', 'B / Circle', 'X / Square', 'Y / Triangle',
+            'LB / L1', 'RB / R1', 'LT / L2', 'RT / R2',
+            'Back', 'Start',
+            'LS (click)', 'RS (click)',
+            'DPad Up', 'DPad Down', 'DPad Left', 'DPad Right',
+            'Home'
+        ];
+
+        function renderGamepad(gp) {
+            let buttonsHtml = '';
+            gp.buttons.forEach((btn, i) => {
+                const pressed = btn.pressed ? 'pressed' : '';
+                const val = btn.value.toFixed(2);
+                const label = buttonLabels[i] || 'B' + i;
+                buttonsHtml += `
+                    <div class="button-box ${pressed}">
+                        <span class="idx">#${i}</span><br>
+                        ${label}
+                        <span class="pressure">${val}</span>
+                    </div>`;
+            });
+
+            let axesHtml = '';
+            gp.axes.forEach((axis, i) => {
+                const pct = Math.abs(axis) * 50;
+                const left = axis < 0 ? (50 - pct) : 50;
+                axesHtml += `
+                    <div class="axis-row">
+                        <span class="axis-label">Axis ${i}</span>
+                        <div class="axis-bar">
+                            <div class="axis-fill" style="left:${left}%;width:${pct}%"></div>
+                        </div>
+                        <span class="axis-value">${axis.toFixed(3)}</span>
+                    </div>`;
+            });
+
+            const lx = gp.axes[0] || 0;
+            const ly = gp.axes[1] || 0;
+            const rx = gp.axes[2] || 0;
+            const ry = gp.axes[3] || 0;
+
+            return `
+                <div class="gamepad-card">
+                    <h2>#${gp.index} &mdash; ${gp.id}</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="section-title">BUTTONS (${gp.buttons.length})</div>
+                            <div class="buttons-grid">${buttonsHtml}</div>
+                        </div>
+                        <div>
+                            <div class="section-title">AXES (${gp.axes.length})</div>
+                            ${axesHtml}
+                            <div class="grid-2" style="margin-top:15px">
+                                <div>
+                                    <div class="section-title" style="text-align:center">Left Stick</div>
+                                    <div class="stick-visual">
+                                        <div class="stick-dot" style="transform:translate(calc(-50% + ${lx*60}px), calc(-50% + ${ly*60}px))"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="section-title" style="text-align:center">Right Stick</div>
+                                    <div class="stick-visual">
+                                        <div class="stick-dot" style="transform:translate(calc(-50% + ${rx*60}px), calc(-50% + ${ry*60}px))"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function loop() {
+            const pads = navigator.getGamepads ? navigator.getGamepads() : [];
+            const active = [...pads].filter(p => p);
+
+            if (active.length === 0) {
+                gamepadsEl.innerHTML = `
+                    <div class="gamepad-card">
+                        <div class="no-gamepad">
+                            No controller detected.
+                            <span>Connect a gamepad (USB or Bluetooth) and press any button to wake it up.</span>
+                        </div>
+                    </div>`;
+            } else {
+                gamepadsEl.innerHTML = active.map(renderGamepad).join('');
+                statusEl.textContent = active.length + ' gamepad(s) connected';
+            }
+
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+</body>
+</html>

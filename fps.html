@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPS / VSync Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { text-align: center; margin-bottom: 10px; }
+        .subtitle { text-align: center; opacity: 0.6; margin-bottom: 30px; }
+        .icon-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 220px;
+            width: 220px;
+            box-sizing: border-box;
+        }
+        .icon:hover { transform: translateY(-10px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+        .icon img { width: 60px; height: 60px; margin-bottom: 15px; object-fit: contain; }
+        .icon .tag {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .icon.internal .tag { background: #d4edda; color: #155724; }
+        .icon.external .tag { background: #cce5ff; color: #004085; }
+        .icon span.title { color: #000; text-align: center; font-size: 1em; }
+        .icon span.subtitle { font-size: 0.8em; opacity: 0.6; margin-top: 5px; text-align: center; }
+        .back-button {
+            display: inline-block;
+            padding: 10px 25px;
+            margin-top: 30px;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            letter-spacing: 1px;
+        }
+        .back-button:hover { background: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FPS / VSync Test</h1>
+        <p class="subtitle">Choose an implementation</p>
+        <div class="icon-grid">
+            <a href="fps-tester.html" class="icon internal">
+                <img src="images/main-page-icons/fps2.png" alt="Internal">
+                <span class="tag">INTERNAL</span>
+                <span class="title">IB FPS Meter</span>
+                <span class="subtitle">Our own tester</span>
+            </a>
+            <a href="https://www.vsynctester.com/" class="icon external" target="_blank">
+                <img src="images/main-page-icons/fps2.png" alt="External">
+                <span class="tag">EXTERNAL</span>
+                <span class="title">vsynctester.com</span>
+                <span class="subtitle">Original site</span>
+            </a>
+        </div>
+        <div style="text-align: center;">
+            <a href="index.html" class="back-button">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
